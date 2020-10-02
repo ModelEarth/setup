@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html;">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="../localsite/img/logo/favicon.png" />
+<title>Environmental Education Resources and Event Calendars - NAAEE and GEEP</title>
+<link type="text/css" rel="stylesheet" href="https://neighborhood.org/localsite/css/base.css" />
+<script type="text/javascript" src="https://neighborhood.org/localsite/js/d3.v5.min.js"></script>
+<script type="text/javascript" src="https://neighborhood.org/localsite/js/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="https://neighborhood.org/localsite/js/localsite.js"></script>
+<script type="text/javascript" src="https://neighborhood.org/localsite/js/showdown.min.js"></script>
+<script type="text/javascript" src="https://neighborhood.org/localsite/js/navigation.js"></script>
+
+<script>
+	//param.titleArray = ["model","earth"]
+	//param.headerLogo = "<img src='../community/img/logo/model-earth.png' style='width:34px; margin-right:2px'>";
+</script>
+
+<style>
+	#headerSiteTitle { font-size: 22px !important; }
+	.projecttime {
+		display:none;
+		margin-bottom:15px;
+	}
+	h2 {
+	    margin-top: 40px;
+	}
+
+</style>
+</head>
+
+<body>
+
+<div class="content contentpadding">
+	<div id="readmeDiv"></div>
+</div>
+
+<script>
+   // If the markdown file won't display in IIS, add an .md MIME type to the website with a value of "text/markdown; charset=UTF-8"
+   loadMarkdown("README.md", "readmeDiv", "_parent");
+</script>
+
+</body>
+</html>

@@ -13,7 +13,7 @@
 
 # Resource and event calendars
 
-Developed in partnership with [NAAEE](https://naaee.org) and the [Southeast Enviromental Education Alliance](http://www.southeastee.com/) for states including [Georgia](http://eeingeorgia.org/core/news/list.aspx), [North Carolina](http://web.eenorthcarolina.org/core/event/calendar.aspx), plus [Wisconsin](http://EEinWisconsin.org), and [Hawaii](http://heea.org/core/news/list.aspx).  With new [US EPA tools](https://model.earth/io/charts/) for Input-Output modeling developed at [model.earth](https://model.earth).  
+Developed in partnership with [NAAEE](https://naaee.org) and the [Southeast Enviromental Education Alliance](http://www.southeastee.com/) for states including [Georgia](http://eeingeorgia.org/core/news/list.aspx), [North Carolina](http://web.eenorthcarolina.org/core/event/calendar.aspx), [Wisconsin](http://EEinWisconsin.org), and [Hawaii](http://heea.org/core/news/list.aspx).  With new [US EPA tools](https://model.earth/io/charts/) for Input-Output modeling developed at [model.earth](https://model.earth).  
 
 
 
@@ -58,6 +58,7 @@ For IContains, we now check for an empty string as well as null. If the string h
 
 # Server Setup Steps
 
+NAAEE provides managed hosting. Help contribute to the [model.earth](https://model.earth) code base.  
 Build a dev site locally or host on a server.  The following uses .NET 4.6.
 
 
@@ -79,7 +80,7 @@ Create a Bin folder in this new site root.  Copy in existing DLLs, or run a scri
 Make sure a primary website is viewable in a browser while on the machine itself.  Some networks may require changes to the firewall settings.  PDF generation requires that the machine can load content via the domains it hosts.<br>
 -->
 
-
+[See IIS install notes](iis/)
 
 
 <h2>Application Pool Setup</h2>
