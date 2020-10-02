@@ -1,76 +1,17 @@
-<div style='float:right; margin-left:40px; margin-right:40px'>
-<b>Site Setup</b><br>
-<a href="../localsite/start/">Localsite Starter</a><br>
-<a href="#server">Server Setup</a><br>
-<a href="#database">Database Setup</a><br>
-<a href="#email">Email Setup</a><br>
-<!--<a href="about/">About Web API</a><br>-->
-</div>
-
-
-<br>
-<a href="https://thegeep.org/"><img src="img/logo/geep.png" style="max-width:400px"></a><br>
-
-# Resource and event calendars
-
-Developed in partnership with [NAAEE](https://naaee.org) and the [Southeast Enviromental Education Alliance](http://www.southeastee.com/) for states including [Georgia](http://eeingeorgia.org/core/news/list.aspx), [North Carolina](http://web.eenorthcarolina.org/core/event/calendar.aspx), [Wisconsin](http://EEinWisconsin.org), and [Hawaii](http://heea.org/core/news/list.aspx).  With new [US EPA tools](https://model.earth/io/charts/) for Input-Output modeling developed at [model.earth](https://model.earth).  
-
-
-
-## Updates
-
-#### Deployment Updates
-
-2020 - Streamlining server migration.  
-2019 - Updates for deployment from Github. 
-
-#### Cloudflare HTTPS Certs
-
-2018 - Switch to free CloudFlare certs for https security.
-
-#### Email Summary Updates
-
-2017 - Email summaries of exceptions are now sent to admins once every 30 minutes containing the remote IPs and the counts per IP address.  Added to adjust for bursts of emails during high traffic.  
-
-For PageName, we've added the highlighted line. If the script_name ends with a trailing slash, as in “/events/”, we return an empty string rather than “events”.  
-
-For IContains, we now check for an empty string as well as null. If the string had been empty, IContains would have returned 0 as the index, and therefore true, rather than false as would be expected.  
-
-
-#### Custom Page URLs
-
-2016 - Added support for custom page URLs for improved search indexing and short URLs.  
-
-#### Static Page Generation Updates
-
-2015 - Pages generated from multiple queries are now stored in static folders for fast loading.  
-
-<!--
-	Fork the Core repo, copy in recent changes from NAAEE version. Changes are primarily removal of remaining IsSite settings. These can be replaced with database settings in the "site" table.
--->
-<br>
-
-
-
-
 <a name="server"></a>
-<br>
-
-# Server Setup Steps
-
-NAAEE provides managed hosting. Help contribute to the [model.earth](https://model.earth) code base.  
-Build a dev site locally or host on a server.  The following uses .NET 4.6.
 
 
+<!--Build a dev site locally or host on a server.  The following uses .NET 4.6.
 
-<!--
 Instruction below are for: Vista - Windows 7/10 / Windows Server 2008/2016 and forward.  
 Commented out: XP - Windows XP / Windows Server 2005  
 -->
 
 ## Install and Configure IIS
 
-Launch Internet Information Services(IIS).  
+[See IIS install notes](iis/)  
+
+Launch Internet Information Services (IIS).  
 You can create one IIS entry for multiple sites that use the same IP addreess.  
 
 <strong>Set the IIS root directory to D:\Web</strong> (or other site root folder)<br>
@@ -79,8 +20,6 @@ Create a Bin folder in this new site root.  Copy in existing DLLs, or run a scri
 <!--
 Make sure a primary website is viewable in a browser while on the machine itself.  Some networks may require changes to the firewall settings.  PDF generation requires that the machine can load content via the domains it hosts.<br>
 -->
-
-[See IIS install notes](iis/)
 
 
 <h2>Application Pool Setup</h2>
@@ -115,8 +54,10 @@ The Web Installer is ease to use and ensures that any prerequisites are installe
 
 If a .aspx page is not recognized, don't add a Mime type. Tried the following, but not resolved:   
 
-Try skipping this, no effect:<br>
+<!--
+Try skipping this, it has no effect:<br>
 To complete the install, go to the Windows Control Panel, choose "Turn Windows features on or off."  In the Windows Features dialog box, click Internet Information Services to install the default features. Expand the Application Development Features node and click ASP.NET [your new version] to add the features that support ASP.NET. Also install lower versions of ASP.NET such as ASP.NET 3.5. This will ensure that older programs will still be able to run. A prompt to assignm roles may pop up first. You can choose "Role-based or feature based installation". When you get to the "Features" section, expand the .NET Framework [your version] and <b>choose ASP.NET [your version]</b>. Choose the restart if needed option.  
+-->
 
 If the website has an error when loading a Core page and the error is from one of the dlls listed below, you may need to add some folders
 to the Global Assembly Cache (GAC). This is located in the C:\Windows\Microsoft.NET\assembly\GAC_MSIL folder. Copy the folders in the
@@ -276,6 +217,46 @@ Give it Full Control. Click Advanced. Keep the first box checked and also check
 the second "Replace permission entries on all child objects..."  
     
 <!--<div class="projecttime" style="display:none"><strong>Time:</strong>&nbsp;2-3 hrs</div>-->
+<br>
+
+
+
+## Updates
+
+#### Deployment Updates
+
+2020 - Streamlining server migration.  
+2019 - Updates for deployment from Github. 
+
+#### Cloudflare HTTPS Certs
+
+2018 - Switch to free CloudFlare certs for https security.
+
+#### Email Summary Updates
+
+2017 - Email summaries of exceptions are now sent to admins once every 30 minutes containing the remote IPs and the counts per IP address.  Added to adjust for bursts of emails during high traffic.  
+
+For PageName, we've added the highlighted line. If the script_name ends with a trailing slash, as in “/events/”, we return an empty string rather than “events”.  
+
+For IContains, we now check for an empty string as well as null. If the string had been empty, IContains would have returned 0 as the index, and therefore true, rather than false as would be expected.  
+
+
+#### Custom Page URLs
+
+2016 - Added support for custom page URLs for improved search indexing and short URLs.  
+
+#### Static Page Generation Updates
+
+2015 - Pages generated from multiple queries are now stored in static folders for fast loading.  
+
+<!--
+    Fork the Core repo, copy in recent changes from NAAEE version. Changes are primarily removal of remaining IsSite settings. These can be replaced with database settings in the "site" table.
+-->
+<br>
+
+
+[Post an issue](https://github.com/modelearth/setup/) if you'd like us to add additional documentation on AWS EC2 configuration.  
 <br><br>
+
 
 
