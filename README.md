@@ -7,6 +7,47 @@ Instruction below are for: Vista - Windows 7/10 / Windows Server 2008/2016 and f
 Commented out: XP - Windows XP / Windows Server 2005  
 -->
 
+
+## AWS Windows Server Setup - EC2
+
+[Setup EC2 with Microsoft Remote Desktop](https://www.freecodecamp.org/news/ec2-with-microsoft-remote-desktop/)  
+
+### Elastic IP Address Setup
+
+Login to <a href="https://console.aws.amazon.com/">AWS Console</a> and select <a href="https://console.aws.amazon.com/ec2/v2/home?#Addresses:">EC2 Elastic IPs</a>
+
+
+### Add additional IP addresses
+
+Reference: <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html">AWS EC2 User Guide</a> 
+
+
+### Allocate Elastic IPs
+
+[AWS elastic-ip-addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
+
+### Configure Windows Operating System to recognize the new IPs
+
+<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html">AWS EC2 User Guide</a>  
+
+
+## AWS - Add Volumes - D: websites and E: Databases  
+
+Use the following steps to add two volumes on the AWS server, one for the websites and another for the databases.
+
+[Create a volume](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-creating-volume.html). Be sure to select the same Availability Zone as the instance that the volume will be attached to. Other than the size, use the default values. Be sure to assign a name to the volume so it can be identified in the AWS console application.  
+
+[Attach the volume to an instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-attaching-volume.html). Use the suggested Device Name.
+
+[Make the volume available to Windows](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ebs-using-volumes.html). You will see a prompt to initialize the disk. Use the default values to do this. Use the recommended Drive letter (D:, E:, etc.) or select another one. Be sure to assign the volume the same name that was used when creating the volume.
+
+Once the drives have been set up, you should be able to see them in Windows Explorer.
+
+
+[Post an issue](https://github.com/modelearth/setup/) if you'd like additional assistance with AWS EC2 Windows Server setup.  
+
+
+
 ## Install and Configure IIS
 
 [See IIS install notes](iis/)  
@@ -66,27 +107,21 @@ to the Global Assembly Cache (GAC). This is located in the C:\Windows\Microsoft.
     Microsoft.Web.Infrastructure
 
 
-Run the utility C:\DreamStudioUtilities\CreateEventLogSource to create the event log source:
-
+Run the utility C:\DreamStudioUtilities\CreateEventLogSource to create the event log source:  
 CreateEventLogSource ManagementSuiteExceptionEmail
 
-Also run for ManagementSuiteMail:
-
+Also run for ManagementSuiteMail:  
 CreateEventLogSource ManagementSuiteMail
 
-This worked:<br>
-Add Web server roles (ISAPI):<br><br>
-<img src="img/steps/add-web-server-roles.gif" style="width:100%;border:1px solid #777">  
+[Add Web server roles (ISAPI)](img/steps/add-web-server-roles.gif)  
 
 <!--
 
 Check which framework version is in the %windir%\Microsoft.NET\Framework64 directory and run the command with that version:  
 
 %windir%\Microsoft.NET\Framework64\v4.0.30319\aspnet_regiis.exe -ir
--->
 
-
-<!-- XP
+XP
    
 Install the <a target="_blank" href="http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5&displaylang=en">
     .NET Framework 2.0 Redistributable Package:</a>
@@ -215,8 +250,7 @@ Click Add to enter the Network Service username if not already present.
 
 Give it Full Control. Click Advanced. Keep the first box checked and also check
 the second "Replace permission entries on all child objects..."  
-    
-<!--<div class="projecttime" style="display:none"><strong>Time:</strong>&nbsp;2-3 hrs</div>-->
+
 <br>
 
 
@@ -255,8 +289,7 @@ For IContains, we now check for an empty string as well as null. If the string h
 <br>
 
 
-[Post an issue](https://github.com/modelearth/setup/) if you'd like us to add additional documentation on AWS EC2 configuration.  
-<br><br>
+
 
 
 
