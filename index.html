@@ -12,11 +12,13 @@
 <script type="text/javascript" src="https://neighborhood.org/localsite/js/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://neighborhood.org/localsite/js/localsite.js"></script>
 <script type="text/javascript" src="https://neighborhood.org/localsite/js/showdown.min.js"></script>
-<script type="text/javascript" src="../localsite/js/navigation.js"></script>
+<script type="text/javascript" src="https://neighborhood.org/localsite/js/navigation.js"></script>
 
 <script>
+if (location.host.indexOf('model.earth') < 0 && location.host.indexOf('localhost') < 0) {  	
 	param.titleArray = ["local","site"]
 	param.headerLogo = "<img src='https://neighborhood.org/localsite/img/logo/neighborhood-icon.png' style='width:34px; margin-right:2px'>";
+}
 </script>
 
 <style>
