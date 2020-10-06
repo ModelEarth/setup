@@ -12,11 +12,11 @@
 <script type="text/javascript" src="https://neighborhood.org/localsite/js/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://neighborhood.org/localsite/js/localsite.js"></script>
 <script type="text/javascript" src="https://neighborhood.org/localsite/js/showdown.min.js"></script>
-<script type="text/javascript" src="https://neighborhood.org/localsite/js/navigation.js"></script>
+<script type="text/javascript" src="../localsite/js/navigation.js"></script>
 
 <script>
-	//param.titleArray = ["model","earth"]
-	//param.headerLogo = "<img src='../community/img/logo/model-earth.png' style='width:34px; margin-right:2px'>";
+	param.titleArray = ["local","site"]
+	param.headerLogo = "<img src='https://neighborhood.org/localsite/img/logo/neighborhood-icon.png' style='width:34px; margin-right:2px'>";
 </script>
 
 <style>
@@ -53,7 +53,7 @@
 
 <script>
    // If the markdown file won't display in IIS, add an .md MIME type to the website with a value of "text/markdown; charset=UTF-8"
-   if (location.host.indexOf('model.earth') >= 0) {
+   if (location.host.indexOf('model.earth') >= 0 || location.host.indexOf('localhost') >= 0) {
    		loadMarkdown("ee.md", "introDiv", "_parent");
 	} else {
 		loadMarkdown("intro.md", "introDiv", "_parent");
