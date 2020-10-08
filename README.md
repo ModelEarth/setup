@@ -90,7 +90,8 @@ Get the latest updates related to the .NET Framework -
 OLD NOTE (We're switching to .NET 4.8, use link above)  
 If not already installed, install the <a target="_blank" href="http://www.microsoft.com/en-us/download/details.aspx?id=17718">.NET Framework 4.0 (Standalone Installer)</a> or the <a target="_blank" href="http://www.microsoft.com/en-us/download/details.aspx?id=17851">.NET Framework 4.0 (Web Installer)</a>.  
 -->  
-The Web Installer is ease to use and ensures that any prerequisites are installed before installing the framework.  
+The Web Installer is easy to use and ensures that any prerequisites are installed before installing the framework.  
+Install the .net 4.8 developer pack on the aws server. (If it initially has 4.7)  
 
 
 If a .aspx page is not recognized, don't add a Mime type. Tried the following, but not resolved:   
