@@ -167,7 +167,7 @@ Setup Network Connectivity and update Firewall settings. If the website and serv
 this step won't be needed.<br>
 
 <!--<div class="projecttime" style="display:none"><strong>Time:</strong>&nbsp;10-40 hrs</div>-->
-
+<a href="img/database/ItemDatabase.gif"><img src="img/database/ItemDatabase.gif" style="width:100%;max-width:828px"></a><br>
 
 ## Add Web.Config file
 
