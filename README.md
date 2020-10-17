@@ -107,9 +107,11 @@ Simply opening seems to update the certs. (Worked when IP range changed.)
 
 ---  
 
-If a failure requesting the new cert occurs, try using a domain that is not already using https at Cloudflare.
-(Need to test to confirm this it the case.)  
+If a failure requesting the new cert occurs, in Cloudflare under "SSL/TLS" change from "Full" to "Off (not secure)". After aquiring cert, turn "Full" back on in Cloudflare to prevent "redirected you too many times" error. And "Always Use HTTPS" under SSL/TLS > Edge Certificates.  (This )
 
+Another option is to use a domain that is not already using https at Cloudflare.
+(Need to test to confirm this it the case.)  
+<!-- 525 error handshake fail occurs before cert added for a domain requiring https in Cloudflare -->
 
 
 
