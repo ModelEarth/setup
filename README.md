@@ -107,7 +107,7 @@ Simply opening seems to update the certs. (Worked when IP range changed.)
 
 ---  
 
-If a failure requesting the new cert occurs, in Cloudflare under "SSL/TLS" change from "Full" to "Off (not secure)". After aquiring cert, turn "Full" back on in Cloudflare to prevent "redirected you too many times" error. And reactivate "Always Use HTTPS" under SSL/TLS > Edge Certificates.  (This works when hstspreload.org is already set for domain.)
+If a failure requesting the new cert occurs, in Cloudflare under "SSL/TLS" change from "Full" to "Off (not secure)". After aquiring cert, turn "Full" back on in Cloudflare to prevent "redirected you too many times" error. And reactivate "Always Use HTTPS" under SSL/TLS > Edge Certificates.  (This works when hstspreload.org is already set for domain.)<!-- note that hstspreload.org has not been turned on for areamarket -->  
 
 Another option is to use a domain that is not already using https at Cloudflare.
 (Need to test to confirm this it the case.)  
