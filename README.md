@@ -83,6 +83,36 @@ Might not need to do this:
 -- For COM dlls used by the asp pages.</li>
 </ul>
 
+
+<h2>Certify the Web - for Windows Servers</h2>
+
+Certifytheweb is a Windows installer for letsencrypt.org certs.  
+The free version supports up to 3 certs per server, with one cert per IIS site.  
+
+For Windows server, download app onto server from: [certifytheweb.com](https://certifytheweb.com/)  
+
+Install app and register yourself as a new contact. Didn't choose "Use Staging (test) Mode"  
+Chose a cert with an IP in IIS. Note that the generated cert will have no IP in IIS.  
+
+Add IP in IIS and optionally remove domain name from the new 433 binding. (Probably okay to keep.)  
+Unchecked "Require Server Name Indication" to save change.  
+
+You can point additional domains at the IP using a proxy in Cloudflare.  
+With AWS EC2, the external IP differs from the IP on the machine.  
+
+CloudFlare reuses one cert for all domains pointed at the IIS site. [Cloudflare setup](https://neighborhood.org/localsite/start/cloudflare)  
+
+"Certify the Web" icon will appear on desktop.  
+Simply opening seems to update the certs. (Worked when IP range changed.)  
+
+---  
+
+If a failure requesting the new cert occurs, try using a domain that is not already using https at Cloudflare.
+(Need to test to confirm this it the case.)  
+
+
+
+
 <h2>Install and Configure .NET, Run Windows Update</h2>
 
 Get the latest updates related to the .NET Framework - 
