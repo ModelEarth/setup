@@ -105,6 +105,10 @@ CloudFlare reuses one cert for all domains pointed at the IIS site. [Cloudflare 
 "Certify the Web" icon will appear on desktop.  
 Simply opening seems to update the certs. (Worked when IP range changed.)  
 
+A hidden folder called .well-known will be generated at the root of your website.  
+to show the certificate authority (CA) that the requester controls the domain. 
+Not sure if this can be removed later.
+
 ---  
 
 If a failure requesting the new cert occurs, in Cloudflare under "SSL/TLS" change from "Full" to "Off (not secure)". After aquiring cert, turn "Full" back on in Cloudflare to prevent "redirected you too many times" error. And reactivate "Always Use HTTPS" under SSL/TLS > Edge Certificates.  (This works when hstspreload.org is already set for domain.)<!-- note that hstspreload.org has not been turned on for areamarket -->  
