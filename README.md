@@ -92,7 +92,8 @@ The free version supports up to 3 certs per server, with one cert per IIS site.
 For Windows server, download app onto server from: [certifytheweb.com](https://certifytheweb.com/)  
 
 Install app and register yourself as a new contact. Didn't choose "Use Staging (test) Mode"  
-Chose a cert with an IP in IIS. Note that the generated cert will have no IP in IIS.  
+Associate a domain to an IP in IIS. You can use the same IP with multiple IIS sites.  
+Note that the generated cert will have no IP in IIS.  
 
 Add IP in IIS and optionally remove domain name from the new 433 binding. (Probably okay to keep.)  
 Unchecked "Require Server Name Indication" to save change.  
