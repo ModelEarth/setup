@@ -16,6 +16,8 @@ Commented out: XP - Windows XP / Windows Server 2005
 
 Login to <a href="https://console.aws.amazon.com/">AWS Console</a> and select <a href="https://console.aws.amazon.com/ec2/v2/home?#Addresses:">EC2 Elastic IPs</a>
 
+If Elastic IPs aren’t used, recycling or stopping/starting the instance will cause new IPs to be assigned to the server. This will not only cause websites to become inaccessible but also our ability to connect to the server using Remote Desktop. We’d have to use a different ip address each time the instance is restarted and the dns for each website would have to be updated.  
+
 
 ### Add additional IP addresses
 
@@ -173,15 +175,15 @@ C:\WINDOWS\Microsoft.NET\Framework\<version>\aspnet_regiis -i<br><br>
 
 <a name="database"></a>
 
-## Install and Setup Database
+## Configure SQL Database
 
-Details in <a href='about/setup/Database.aspx'>Database Setup</a><br>
-
-
-**Install Sql Server using the followign steps**  
+<!--about/setup/Database.aspx'>Database Setup-->
 
 
-Install standalone server<br>
+**SQL Server is pre-installed with AWS EC2 Windows**  
+
+
+Install as standalone server<br>
 Use the default instance and use a different drive if possible for user databases and backups.<br>
 <ul>
     <li>Data and Transaction Log files: E:\Data</li>

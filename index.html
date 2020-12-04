@@ -15,9 +15,12 @@
 <script type="text/javascript" src="https://neighborhood.org/localsite/js/navigation.js"></script>
 
 <script>
-if (location.host.indexOf('model.earth') < 0 && location.host.indexOf('localhost') < 0) {  	
+if (1==2 && location.host.indexOf('model.earth') < 0 && location.host.indexOf('localhost') < 0) {  	
 	param.titleArray = ["local","site"]
 	param.headerLogo = "<img src='https://neighborhood.org/localsite/img/logo/neighborhood-icon.png' style='width:34px; margin-right:2px'>";
+} else if (!Array.isArray(param.titleArray) && (param.startTitle == "grantp" || location.host.indexOf('gpna') >= 0)) {
+	 param.titleArray = []	
+	 param.headerLogo = "<img src='https://grantpark.org/grantpark/img/logo/gpna-rect.png' style='width:60px; margin-right:2px'>";
 }
 </script>
 
