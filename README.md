@@ -13,6 +13,7 @@ Commented out: XP - Windows XP / Windows Server 2005
 [Setup EC2 with Microsoft Remote Desktop](https://www.freecodecamp.org/news/ec2-with-microsoft-remote-desktop/)  
 EC2 (Elastic Compute Cloud) provides virtual server hosting -
 free tier or [billable hosting](https://console.aws.amazon.com/billing/home)  
+**Important:** Set up [billing monitoring](https://console.aws.amazon.com/cost-management/home?#/anomaly-detection/overview?activeTab=subscriptions) before proceding.  
 
 ### Elastic IP Address Setup
 
