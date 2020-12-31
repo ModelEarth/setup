@@ -7,6 +7,7 @@ Instruction below are for: Vista - Windows 7/10 / Windows Server 2008/2016 and f
 Commented out: XP - Windows XP / Windows Server 2005  
 -->
 
+Connect to your [Existing Windows Instances](https://console.aws.amazon.com/ec2/v2/home?Instances#Instances:)
 
 ## AWS Windows Server Setup - EC2
 
