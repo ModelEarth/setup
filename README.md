@@ -9,17 +9,8 @@ Commented out: XP - Windows XP / Windows Server 2005
 
 Connect to your [Existing Windows Instances](https://console.aws.amazon.com/ec2/v2/home?Instances#Instances:)
 
-## AWS Windows Server Setup - EC2
 
-[Setup EC2 with Microsoft Remote Desktop](https://www.freecodecamp.org/news/ec2-with-microsoft-remote-desktop/)  
-In [AWS Management Console](https://aws.amazon.com/console/), Choose Services, then EC2. In the sidebar, click Instances.  
-
-EC2 (Elastic Compute Cloud) provides virtual server hosting -
-free tier or [billable hosting](https://console.aws.amazon.com/billing/home)  
-**Important:** Set up [billing monitoring](https://console.aws.amazon.com/cost-management/home?#/anomaly-detection/overview?activeTab=subscriptions) before proceding.  
-
-
-### Create an RDS instance for your data
+## Create an RDS instance for your data
 
 Use the second button on the [RDS page](https://console.aws.amazon.com/rds/home) (The first is Aurora).  
 
@@ -51,6 +42,17 @@ Add an MSSQL inbound rule to the default security group, which is the same group
 Don added the option group to create the S3 bucket etc.  
 
 [Connecting to a DB Instance running Microsoft SQL Server](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToMicrosoftSQLServerInstance.html)
+
+
+## AWS Windows Server Setup - EC2
+
+[Setup EC2 with Microsoft Remote Desktop](https://www.freecodecamp.org/news/ec2-with-microsoft-remote-desktop/)  
+In [AWS Management Console](https://aws.amazon.com/console/), Choose Services, then EC2. In the sidebar, click Instances.  
+
+EC2 (Elastic Compute Cloud) provides virtual server hosting -
+free tier or [billable hosting](https://console.aws.amazon.com/billing/home)  
+**Important:** Set up [billing monitoring](https://console.aws.amazon.com/cost-management/home?#/anomaly-detection/overview?activeTab=subscriptions) before proceding.  
+
 
 ### Elastic IP Address Setup
 
