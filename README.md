@@ -12,9 +12,34 @@ Connect to your [Existing Windows Instances](https://console.aws.amazon.com/ec2/
 ## AWS Windows Server Setup - EC2
 
 [Setup EC2 with Microsoft Remote Desktop](https://www.freecodecamp.org/news/ec2-with-microsoft-remote-desktop/)  
+In [AWS Management Console](https://aws.amazon.com/console/), Choose Services, then EC2. In the sidebar, click Instances.  
+
 EC2 (Elastic Compute Cloud) provides virtual server hosting -
 free tier or [billable hosting](https://console.aws.amazon.com/billing/home)  
 **Important:** Set up [billing monitoring](https://console.aws.amazon.com/cost-management/home?#/anomaly-detection/overview?activeTab=subscriptions) before proceding.  
+
+
+### Create an RDS instance for your data
+
+Use the second button on the [RDS page](https://console.aws.amazon.com/rds/home), first is Aurora.  
+
+<!--
+Loren had done the following:
+DB instance size > Burtable classes (includes t classes) > db.t3.medium  
+Left maximum storage threshold at 1000 GiB  
+Left: Default VPC (vpc-95d988ed) - only one available, not sure if if already existed  
+
+Changed Public access to Yes.  
+Set time zone to EST.  
+
+I did not create Windows Directory, maybe we need to do that next time.  
+-->
+
+Set the storage size to 100 GB per the recommendations for performance reasons. Evidently, the burstability credits (I think that’s the term) rebuild faster with larger storage volumes. That increased the monthly cost by about $10 / month.  
+
+Add an MSSQL inbound rule to the default security group, which is the same group updated for http and https connections.  
+
+Don added the option group to create the S3 bucket etc.  
 
 ### Elastic IP Address Setup
 
