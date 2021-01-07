@@ -21,25 +21,36 @@ free tier or [billable hosting](https://console.aws.amazon.com/billing/home)
 
 ### Create an RDS instance for your data
 
-Use the second button on the [RDS page](https://console.aws.amazon.com/rds/home), first is Aurora.  
+Use the second button on the [RDS page](https://console.aws.amazon.com/rds/home) (The first is Aurora).  
 
-<!--
-Loren had done the following:
-DB instance size > Burtable classes (includes t classes) > db.t3.medium  
-Left maximum storage threshold at 1000 GiB  
-Left: Default VPC (vpc-95d988ed) - only one available, not sure if if already existed  
+1. Select Standard Create  
+1. Select Sql Server engine  
+1. Select Sql Server Web Edition  
+1. Select the latest version (by default)  
+1. Select the Production Template  
+1. DB instance size > Burtable classes (includes t classes) > db.t3.medium (2 vCPUs, 4 GB RAM, 2085 Mbps)  
+1. Select the Storage type: General Purpose (SSD)
+1. Maximum storage threshold: 1000 GB (the default value)    
+1. Default VPC (vpc-95d988ed) - only one available  
+1. Select the Storage type: General Purpose (SSD)  
+Enter the Allocated Storage: 100 GB (20 GB default) 100 GB per the recommendations for performance reasons. Burstability credits rebuild faster with larger storage volumes. Increases cost by about $10/mo.  
+1. Storage autoscaling: Checked (by default)  
+1. Maximum storage threshold: 1000 GB (the default value)  
+1. Select the VPC: Default VPC (vpc-95d988ed)  
+1. Select the subnet group: default  
+1. Select Public Access: Yes (Needed for SSMS Access?)  
+1. Select the VPC Security Group – default (this is the default option – not sure if this should match the EC2 security group)  
+1. Select the Availability Zone: us-east-1f (Same as the EC2 instances)  
+1. Microsoft SQL Server Windows Authentication: Unchecked (the default option – not sure if this is needed or how to set up)
+Did not create Windows Directory service, maybe we need to do that next time. (If doing so, set time zone to EST.)  
+1. Additional configuration: Use the default options  
 
-Changed Public access to Yes.  
-Set time zone to EST.  
-
-I did not create Windows Directory, maybe we need to do that next time.  
--->
-
-Set the storage size to 100 GB per the recommendations for performance reasons. Evidently, the burstability credits (I think that’s the term) rebuild faster with larger storage volumes. That increased the monthly cost by about $10 / month.  
 
 Add an MSSQL inbound rule to the default security group, which is the same group updated for http and https connections.  
 
 Don added the option group to create the S3 bucket etc.  
+
+[Connecting to a DB Instance running Microsoft SQL Server](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToMicrosoftSQLServerInstance.html)
 
 ### Elastic IP Address Setup
 
