@@ -53,6 +53,13 @@ EC2 (Elastic Compute Cloud) provides virtual server hosting -
 free tier or [billable hosting](https://console.aws.amazon.com/billing/home)  
 **Important:** Set up [billing monitoring](https://console.aws.amazon.com/cost-management/home?#/anomaly-detection/overview?activeTab=subscriptions) before proceding.  
 
+### Get the Public IP
+
+In the EC2 list slide to the right and get the IPv4 DNS.  
+Click the row to see the public IPv4.  
+
+Maybe this is just for the initial remote connection? It might change when instance is restarted, hence the need to set a permanent IP.    
+
 
 ### Elastic IP Address Setup
 
