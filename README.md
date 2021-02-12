@@ -53,6 +53,12 @@ EC2 (Elastic Compute Cloud) provides virtual server hosting -
 free tier or [billable hosting](https://console.aws.amazon.com/billing/home)  
 **Important:** Set up [billing monitoring](https://console.aws.amazon.com/cost-management/home?#/anomaly-detection/overview?activeTab=subscriptions) before proceding.  
 
+Under [Billing Preferences](https://console.aws.amazon.com/billing/home?#/preferences)
+<!--
+Simple Notifications
+https://console.aws.amazon.com/sns/v3/home?region=us-east-1#/subscriptions
+-->
+
 ### Get the Public IP
 
 In the EC2 list slide to the right and get the IPv4 DNS.  
@@ -142,7 +148,11 @@ The free version supports up to 3 certs per server, with one cert per IIS site.
 
 For Windows server, download app onto server from: [certifytheweb.com](https://certifytheweb.com/)  
 
-Install app and register yourself as a new contact. Didn't choose "Use Staging (test) Mode"  
+Install the app. There is no account login or password requested.  
+Click "New Certificate" and register yourself as a new contact.  
+You'll be prompted to enter an email address.  
+Didn't choose "Use Staging (test) Mode"  
+
 Associate a domain to an IP in IIS. You can use the same IP with multiple IIS sites.  
 Note that the generated cert will have no IP in IIS.  
 
