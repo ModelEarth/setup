@@ -163,9 +163,10 @@ You can point additional domains at the IP using a proxy in Cloudflare.
 With AWS EC2, the external IP differs from the IP on the machine.  
 
 CloudFlare reuses one cert for all domains pointed at the IIS site. [Cloudflare setup](https://neighborhood.org/localsite/start/cloudflare)  
+(So unchecked additional domains that were also in the IIS site.)
 
 "Certify the Web" icon will appear on desktop.  
-Simply opening seems to update the certs. (Worked when IP range changed.)  
+Simply opening will update the certs. (Worked when IP range changed, but does't work when moving to a new machine.)  
 
 A hidden folder called .well-known will be generated at the root of your website.  
 to show the certificate authority (CA) that the requester controls the domain. 
@@ -350,8 +351,12 @@ Click Add to enter the Network Service username if not already present.
 Give it Full Control. Click Advanced. Keep the first box checked and also check
 the second "Replace permission entries on all child objects..."  
 
-<br>
 
+## Create a Backup Snapshot
+
+To make a backup, switch from using static IP addresses back to using DHCP, create a snapshot, then re-add the secondary IP addresses after making the backup.  As a result, your websites will be down about 10-15 minutes while you are taking the snapshot.  
+
+If you don't switch to static IPs, your install from the snapshot will return a 1/2 complete error.  
 
 
 ## Updates
