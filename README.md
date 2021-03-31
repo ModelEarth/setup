@@ -203,13 +203,59 @@ C:\WINDOWS\Microsoft.NET\Framework\<version>\aspnet_regiis -i<br><br>
 
 <a name="database"></a>
 
-## Configure SQL Database
+## RDS for your SQL Database
 
 <!--about/setup/Database.aspx'>Database Setup-->
 
 
-**SQL Server is pre-installed with AWS EC2 Windows**  
+**The cost is about over 60% more if SQL Server is pre-installed with AWS EC2 Windows due to the large size required.**  
 
+Instead, use a medium-sized EC2 instance and create a medium-sized RDS instance for your data.  
+
+Use the second button on the [RDS page](https://console.aws.amazon.com/rds/home) (The first is Aurora).  
+
+1. Select Standard Create  
+1. Select Sql Server engine  
+1. Select Sql Server Web Edition  
+1. Select the latest version (by default)  
+1. Select the Production Template  
+1. DB instance size > Burtable classes (includes t classes) > db.t3.medium (2 vCPUs, 4 GB RAM, 2085 Mbps)  
+1. Select the Storage type: General Purpose (SSD)
+1. Maximum storage threshold: 1000 GB (the default value)    
+1. Default VPC (vpc-95d988ed) - only one available  
+1. Select the Storage type: General Purpose (SSD)  
+Enter the Allocated Storage: 100 GB (20 GB default) 100 GB per the recommendations for performance reasons. Burstability credits rebuild faster with larger storage volumes. Increases cost by about $10/mo.  
+1. Storage autoscaling: Checked (by default)  
+1. Maximum storage threshold: 1000 GB (the default value)  
+1. Select the VPC: Default VPC (vpc-95d988ed)  
+1. Select the subnet group: default  
+1. Select Public Access: No (Setting to Yes would be a security risk. See the setup instructions below to allow the EC2 instance to connect to the RDS instnce)  
+1. Select the VPC Security Group – default (this is the default option – not sure if this should match the EC2 security group)  
+1. Select the Availability Zone: us-east-1f (Same as the EC2 instances)  
+1. Microsoft SQL Server Windows Authentication: Unchecked (the default option – not sure if this is needed or how to set up)  
+Did not create Windows Directory service, maybe we need to do that next time. (If doing so, set time zone to EST.)  
+1. Additional configuration: Use the default options  
+
+
+Add an MSSQL inbound rule to the default security group, which is the same group updated for http and https connections.  
+
+Add the option group to create the S3 bucket etc.<!-- Don did this-->  
+
+[Connecting to a DB Instance running Microsoft SQL Server](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToMicrosoftSQLServerInstance.html)  
+After Amazon RDS provisions your DB instance, you can use any standard SQL client application to connect to the DB instance.  
+
+## Allow the EC2 instance to connect to the RDS instance
+
+Reference: [Scenarios for accessing a DB instance in a VPC](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.Scenarios.html#USER_VPC.Scenario1)
+
+The goal is to only allow the EC2 instance to access the RDS instance.  
+This allows public access to the web server on the EC2 instance while keeping the RDS instance private.
+
+See "Connect to RDS instance" notes in core-admin
+
+
+<!--
+Probably not used
 
 Install as standalone server<br>
 Use the default instance and use a different drive if possible for user databases and backups.<br>
@@ -232,25 +278,17 @@ Create Backup Maintenance Plans and Schedules<br>
 Create logins<br>
 Setup Network Connectivity and update Firewall settings. If the website and server will reside on the same server,
 this step won't be needed.<br>
+-->
 
-<!--<div class="projecttime" style="display:none"><strong>Time:</strong>&nbsp;10-40 hrs</div>-->
+## Core Data Schema  
+
+Each entity receives an ItemID.  Items include users, events, locations, organizations, group lists.  
+
 <a href="img/database/ItemDatabase.gif"><img src="img/database/ItemDatabase.gif" style="width:100%;max-width:828px"></a><br>
 
 ## Add Web.Config file
 
-Use core-admin/web.config or <a href='about/setup/File.aspx'>Generate Web.config File</a> and place in root folder.<br>
-
-Temp: removed from web.config &lt;customErrors mode="Off" /&gt;  
-
-	redirectMode="ResponseRewrite" defaultRedirect="~/net/engine/core/errorpage.aspx"
-
-If you are moving a web.config from an older server and received an Integrated Pipes error, run:
-
-	%SystemRoot%\system32\inetsrv\appcmd migrate config "Your Site Name in IIS/"
-
-
-<!--<div class="projecttime" style="display:none"><strong>Time:</strong>&nbsp;4-8 hrs Setup/Testing/Troubleshooting</div>-->
-   
+See notes in core-admin  
 
 
 <h2>Add MIME types</h2>
@@ -331,6 +369,7 @@ If you don't switch to static IPs, your install from the snapshot will return a 
 
 #### Deployment Updates
 
+2021 - EC2/RDS setup notes  
 2020 - Streamlining server migration.  
 2019 - Updates for deployment from Github. 
 
