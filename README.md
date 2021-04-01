@@ -124,7 +124,7 @@ Didn't choose "Use Staging (test) Mode"
 Associate a domain to an IP in IIS. You can use the same IP with multiple IIS sites.  
 Note that the generated cert will have no IP in IIS.  
 
-Add IP in IIS and optionally remove domain name from the new 433 binding. (Probably okay to keep.)  
+Add IP in IIS and optionally remove domain name from the new 433 binding. (Important)<!-- parks site returned Not Found until this was done. -->  
 Unchecked "Require Server Name Indication" to save change.  
 
 You can point additional domains at the IP using a proxy in Cloudflare.  
