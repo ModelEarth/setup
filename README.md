@@ -76,6 +76,8 @@ From [How to List and View Timezones](https://docs.aws.amazon.com/AWSEC2/latest/
     tzutil /l
     tzutil /s "Eastern Standard Time"
 
+The time zone for the RDS instance defaults to UTC. Evidently the only way to fix this is to create a new RDS instance and select the time zone you want. The alternative, which sounds very painful, is to handle the time zone offset in the application. So, any date time results from the database plus queries, updates, and inserts would need to handle the offset from the application layer.  
+
 ## Install and Configure IIS
 
 [See IIS install notes](iis/)  
