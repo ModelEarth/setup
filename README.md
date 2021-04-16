@@ -5,7 +5,7 @@
 Instruction below are for: Vista - Windows 7/10 / Windows Server 2008/2016 and forward.  
 Commented out: XP - Windows XP / Windows Server 2005  
 -->
-Links: <a href="https://console.aws.amazon.com/ec2/v2/home?Instances#Instances:" target="_blank">Windows Instances (EC2)</a> | [AWS Billing Summary](https://console.aws.amazon.com/billing/home)
+Links: <a href="https://console.aws.amazon.com/ec2/v2/home?Instances#Instances:" target="_blank">Windows Instances EC2</a> | [RDS](https://console.aws.amazon.com/rds/home) | [AWS Billing Summary](https://console.aws.amazon.com/billing/home)
 
 ## AWS Windows Server Setup - EC2
 
