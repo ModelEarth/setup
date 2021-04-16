@@ -66,17 +66,7 @@ Use the following steps to add two volumes on the AWS server, one for the websit
 Once the drives have been set up, you should be able to see them in Windows Explorer.
 
 
-[Post an issue](https://github.com/modelearth/setup/) if you'd like additional assistance with AWS EC2 Windows Server setup.  
-
-
-## Set the time zone
-
-From [How to List and View Timezones](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/windows-set-time.html) so they don't default back to UTC.  
-
-    tzutil /l
-    tzutil /s "Eastern Standard Time"
-
-The time zone for the RDS instance defaults to UTC. Evidently the only way to fix this is to create a new RDS instance and select the time zone you want. The alternative, which sounds very painful, is to handle the time zone offset in the application. So, any date time results from the database plus queries, updates, and inserts would need to handle the offset from the application layer.  
+[Post an issue](https://github.com/modelearth/setup/) if you'd like additional assistance with AWS EC2 Windows Server setup.   
 
 ## Install and Configure IIS
 
@@ -219,6 +209,8 @@ Instead, use a medium-sized EC2 instance and create a medium-sized RDS instance 
 
 Use the second button on the [RDS page](https://console.aws.amazon.com/rds/home) (The first is Aurora).  
 
+IMPORTANT - Change the timezone from UTC to your local timezone when you create the new RDS.  
+
 1. Select Standard Create  
 1. Select Sql Server engine  
 1. Select Sql Server Web Edition  
@@ -284,6 +276,17 @@ Create logins<br>
 Setup Network Connectivity and update Firewall settings. If the website and server will reside on the same server,
 this step won't be needed.<br>
 -->
+
+
+## Set the RDS time zone
+
+From [How to List and View Timezones](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/windows-set-time.html) so they don't default back to UTC.  
+
+    tzutil /l
+    tzutil /s "Eastern Standard Time"
+
+The time zone for the RDS instance defaults to UTC. Evidently the only way to fix this is to create a new RDS instance and select the time zone you want. The alternative, which sounds very painful, is to handle the time zone offset in the application. So, any date time results from the database plus queries, updates, and inserts would need to handle the offset from the application layer. 
+
 
 ## Core Data Schema  
 
