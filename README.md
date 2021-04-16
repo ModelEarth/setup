@@ -1,24 +1,20 @@
 <a name="server"></a>
 
-
 <!--Build a dev site locally or host on a server.  The following uses .NET 4.6.
 
 Instruction below are for: Vista - Windows 7/10 / Windows Server 2008/2016 and forward.  
 Commented out: XP - Windows XP / Windows Server 2005  
 -->
-
-Connect to your <a href="https://console.aws.amazon.com/ec2/v2/home?Instances#Instances:" target="_blank">Existing Windows Instances</a>  
+Links: <a href="https://console.aws.amazon.com/ec2/v2/home?Instances#Instances:" target="_blank">Windows Instances (EC2)</a> | [AWS Billing Summary](https://console.aws.amazon.com/billing/home)
 
 ## AWS Windows Server Setup - EC2
 
-[Setup EC2 with Microsoft Remote Desktop](https://www.freecodecamp.org/news/ec2-with-microsoft-remote-desktop/)  
+
+EC2 (Elastic Compute Cloud) provides virtual server hosting.  
+[Access EC2 with Microsoft Remote Desktop](https://www.freecodecamp.org/news/ec2-with-microsoft-remote-desktop/)  
 In [AWS Management Console](https://aws.amazon.com/console/), Choose Services, then EC2. In the sidebar, click Instances.  
 
-EC2 (Elastic Compute Cloud) provides virtual server hosting -
-free tier or [billable hosting](https://console.aws.amazon.com/billing/home)  
-**Important:** Set up [billing monitoring](https://console.aws.amazon.com/cost-management/home?#/anomaly-detection/overview?activeTab=subscriptions) before proceding.  
-
-Under [Billing Preferences](https://console.aws.amazon.com/billing/home?#/preferences)
+Set up [billing monitoring](https://console.aws.amazon.com/cost-management/home?#/anomaly-detection/overview?activeTab=subscriptions) before proceding under [Billing Preferences](https://console.aws.amazon.com/billing/home?#/preferences) or start with the free tier.
 <!--
 Simple Notifications
 https://console.aws.amazon.com/sns/v3/home?region=us-east-1#/subscriptions
@@ -26,10 +22,10 @@ https://console.aws.amazon.com/sns/v3/home?region=us-east-1#/subscriptions
 
 ### Get the Public IP
 
-In the EC2 list slide to the right and get the IPv4 DNS.  
+In the EC2 list, slide to the right and get the IPv4 DNS.  
 Click the row to see the public IPv4.  
 
-Maybe this is just for the initial remote connection? It might change when instance is restarted, hence the need to set a permanent IP.    
+Later you'll set a permanent IP since it will otherwise change when the instance is restarted.
 
 
 ### Elastic IP Address Setup and Review
@@ -43,6 +39,7 @@ If Elastic IPs aren’t used, recycling or stopping/starting the instance will c
 
 Reference: <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html">AWS EC2 User Guide</a> 
 
+Note that by avoiding entering IP addresses in IIS, you can reuse one IP with multiple sites.  
 
 ### Allocate Elastic IPs
 
@@ -198,12 +195,12 @@ C:\WINDOWS\Microsoft.NET\Framework\<version>\aspnet_regiis -i<br><br>
 
 <a name="database"></a>
 
-## RDS for your SQL Database
+## Setup RDS for SQL Databases
 
 <!--about/setup/Database.aspx'>Database Setup-->
 
 
-**The cost is about over 60% more if SQL Server is pre-installed with AWS EC2 Windows due to the large size required.**  
+**The cost is about over 60% more if SQL Server reside on the EC2 Windows server due to the large size required.**  
 
 Instead, use a medium-sized EC2 instance and create a medium-sized RDS instance for your data.  
 
@@ -280,12 +277,12 @@ this step won't be needed.<br>
 
 ## Set the RDS time zone
 
-From [How to List and View Timezones](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/windows-set-time.html) so they don't default back to UTC.  
+From [How to List and View Timezones](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/windows-set-time.html) - so the timezone doesn't default back to UTC.  
 
     tzutil /l
     tzutil /s "Eastern Standard Time"
 
-The time zone for the RDS instance defaults to UTC. Evidently the only way to fix this is to create a new RDS instance and select the time zone you want. The alternative, which sounds very painful, is to handle the time zone offset in the application. So, any date time results from the database plus queries, updates, and inserts would need to handle the offset from the application layer. 
+The time zone for the RDS instance defaults to UTC. Evidently the only way to fix this is to create a new RDS instance and select the time zone you want. The alternative, is to handle the time zone offset in the application. So, any date time results from the database plus queries, updates, and inserts would need to handle the offset from the application layer. 
 
 
 ## Core Data Schema  
