@@ -7,10 +7,7 @@ Instruction below are for: Vista - Windows 7/10 / Windows Server 2008/2016 and f
 Commented out: XP - Windows XP / Windows Server 2005  
 -->
 
-Connect to your [Existing Windows Instances](https://console.aws.amazon.com/ec2/v2/home?Instances#Instances:)
-
-
-
+Connect to your <a href="https://console.aws.amazon.com/ec2/v2/home?Instances#Instances:" target="_blank">Existing Windows Instances</a>  
 
 ## AWS Windows Server Setup - EC2
 
@@ -35,14 +32,14 @@ Click the row to see the public IPv4.
 Maybe this is just for the initial remote connection? It might change when instance is restarted, hence the need to set a permanent IP.    
 
 
-### Elastic IP Address Setup
+### Elastic IP Address Setup and Review
 
-Login to <a href="https://console.aws.amazon.com/">AWS Console</a> and select <a href="https://console.aws.amazon.com/ec2/v2/home?#Addresses:">EC2 Elastic IPs</a>
+Login to <a href="https://console.aws.amazon.com/">AWS Console</a> and select <a href="https://console.aws.amazon.com/ec2/v2/home?#Addresses:">EC2 Elastic IPs</a> to view the public DNS IPv4 addresses that are mapped to the private IPs you use in IIS.  
 
 If Elastic IPs aren’t used, recycling or stopping/starting the instance will cause new IPs to be assigned to the server. This will not only cause websites to become inaccessible but also our ability to connect to the server using Remote Desktop. We’d have to use a different ip address each time the instance is restarted and the dns for each website would have to be updated.  
 
 
-### Add additional IP addresses
+### Add Additional IP Addresses
 
 Reference: <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html">AWS EC2 User Guide</a> 
 
@@ -72,6 +69,12 @@ Once the drives have been set up, you should be able to see them in Windows Expl
 [Post an issue](https://github.com/modelearth/setup/) if you'd like additional assistance with AWS EC2 Windows Server setup.  
 
 
+## Set the time zone
+
+From [How to List and View Timezones](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/windows-set-time.html) so they don't default back to UTC.  
+
+    tzutil /l
+    tzutil /s "Eastern Standard Time"
 
 ## Install and Configure IIS
 
