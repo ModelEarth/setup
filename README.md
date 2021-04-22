@@ -204,34 +204,52 @@ C:\WINDOWS\Microsoft.NET\Framework\<version>\aspnet_regiis -i<br><br>
 
 Instead, use a medium-sized EC2 instance and create a medium-sized RDS instance for your data.  
 
-Use the second button on the [RDS page](https://console.aws.amazon.com/rds/home) (The first is Aurora).  
+IMPORTANT - Change the timezone from UTC to your local timezone when you create a new RDS instance.  
 
-IMPORTANT - Change the timezone from UTC to your local timezone when you create the new RDS.  
-
+1. On the [RDS page](https://console.aws.amazon.com/rds/home), click Create Database.
 1. Select Standard Create  
 1. Select Sql Server engine  
 1. Select Sql Server Web Edition  
-1. Select the latest version (by default)  
-1. Select the Production Template  
-1. DB instance size > Burtable classes (includes t classes) > db.t3.medium (2 vCPUs, 4 GB RAM, 2085 Mbps)  
-1. Select the Storage type: General Purpose (SSD)
-1. Maximum storage threshold: 1000 GB (the default value)    
-1. Default VPC (vpc-95d988ed) - only one available  
+1. Select the latest version (by default)
+1. Enter the DB Identifier and Credentials  
+1. Select the DB instance class: Select Burstable classes (includes t classes) and then select the db.t3.medium (2 vCPUs, 4 GB RAM, 2085 Mbps) option 
 1. Select the Storage type: General Purpose (SSD)  
 Enter the Allocated Storage: 100 GB (20 GB default) 100 GB per the recommendations for performance reasons. Burstability credits rebuild faster with larger storage volumes. Increases cost by about $10/mo.  
 1. Storage autoscaling: Checked (by default)  
-1. Maximum storage threshold: 1000 GB (the default value)  
-1. Select the VPC: Default VPC (vpc-95d988ed)  
+1. Maximum storage threshold: 1000 GB (the default value)    
+1. Default VPC (vpc-95d988ed) - only one available  
 1. Select the subnet group: default  
 1. Select Public Access: No (Setting to Yes would be a security risk. See the setup instructions below to allow the EC2 instance to connect to the RDS instnce)  
-1. Select the VPC Security Group – default (this is the default option – not sure if this should match the EC2 security group)  
-1. Select the Availability Zone: us-east-1f (Same as the EC2 instances)  
-1. Microsoft SQL Server Windows Authentication: Unchecked (the default option – not sure if this is needed or how to set up)  
-Did not create Windows Directory service, maybe we need to do that next time. (If doing so, set time zone to EST.)  
-1. Additional configuration: Use the default options  
+1. Select the VPC Security Group – Select Choose existing option - default (this is the default option) or Select Create new option to create a new security group just for RDS. For future instances, it may be better to create a new VPC Security Group so a more descriptive name can be used other than "default"  
+1. Select the Availability Zone: us-east-1f (Same as the EC2 instances)
+1. Under Additional configuration, use the default value for the Database port  
+1. Microsoft SQL Server Windows Authentication: Unchecked (the default option). Estimated cost to enable is $288/month as of 4/2021.  
+1. Additional configuration:
+    1. DB parameter group: default value
+    1. Option group: default value
+    1. Time zone: US Eastern Standard Time
+    1. Collation: empty (the default)
+    1. Enable automatic backups: checked (the default)
+    1. Backup retention period: 7 days (the default)
+    1. Backup window: Choose the Select window option. Enter 7:00 am UTC for 1 hour (2am EST)
+    1. Copy tags: checked (the default)
+    1. Enable Encryption: checked (the default)
+    1. Master key: Use the default value
+    1. Enable Performance Insights: checked (the default)
+        1. Retention period: 7 days (the default)
+        1. Master key: Use the default value
+    1. Enable Enhanced Monitoring: checked (the default)
+        1. Granularity: 60 seconds (the default)
+        1. Monitoring role: default (the default)
+    1. Log Exports
+        1. Agent log: checked
+        1. Error log: checked
+    1. Enable auto minor version upgrade: Checked
+    1. Maintenance Window: Choose the Select window option. Enter Sunday 9:00 am UTC for 1 hour (4am EST)
+    1. Deletion protection: Enabled 
 
 
-Add an MSSQL inbound rule to the default security group, which is the same group updated for http and https connections.  
+Add an MSSQL inbound rule to the default security group.  
 
 Add the option group to create the S3 bucket etc.<!-- Don did this-->  
 
@@ -246,6 +264,148 @@ The goal is to only allow the EC2 instance to access the RDS instance.
 This allows public access to the web server on the EC2 instance while keeping the RDS instance private.
 
 See "Connect to RDS instance" notes in core-admin
+
+## Setup to allow importing/exporting SQL Database backups
+
+Since RDS does not allow access to the underlying operating system that hosts Sql Server, you need to use an S3 bucket to import or export database backups to and from RDS. After setting up components to allow RDS to access the S3 bucket, you will use stored procedures to import or export database backups to and from RDS.
+
+References:
+
+[Creating an S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html)
+
+[Importing and exporting SQL Server databases](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.Procedural.Importing.html#SQLServer.Procedural.Importing.Native.Using.Restore)
+
+[Support for native backup and restore in SQL Server](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.SQLServer.Options.BackupRestore.html)
+
+Three components are needed to set up SQL database imports and exports:
+1. An Amazon S3 bucket
+2. An AWS Identity and Access Management (IAM) role to access the bucket
+3. The SQLSERVER\_BACKUP\_RESTORE option added to an option group on the DB instance. Note that a SQLSERVER\_BACKUP\_RESTORE option must be added for each DB instance that needs access to the S3 bucket.
+
+if this is the first time you are setting this up, create a non-public S3 Bucket first if one doesn't already exist. You can have a new IAM role created for you when you add the SQLSERVER\_BACKUP\_RESTORE option to the option group. Otherwise, just select the existing IAM role when adding the SQLSERVER\_BACKUP\_RESTORE option.
+
+If you are creating a new database instance and the option group already exists, you can:
+- Specify that option group when creating the instance OR
+- Assign the option group to the instance after it has been created. See the Associate the option group with the database instance section below.
+
+### Creating an S3 Bucket
+
+Note: There is no need to create an S3 bucket if an existing non-public S3 bucket already exists.
+
+1. On the [S3 page](https://s3.console.aws.amazon.com/s3/home?region=us-east-1), click Create bucket.
+1. Enter a descriptive bucket name
+1. AWS Region: US East (N. Virginia) us-east-1 (the default)
+1. Block all public access: checked (the default value)
+1. Bucket Versioning: Disable (the default)
+1. Tags: No tags unless desired
+1. Server-side encryption: Disable (the default)
+1. Advanced settings
+    1. Object Lock: Disable (the default)
+1. Review and click Create bucket
+
+### Create an IAM Role and Option Group with the SQLSERVER\_BACKUP\_RESTORE option added
+
+1. Open the [RDS Console](https://console.aws.amazon.com/rds/)
+1. In the navigation pane, choose Option groups.
+1. Assuming there is no existing option group that does not already have a SQLSERVER\_BACKUP\_RESTORE option, create a new option group by clicking Create Group.
+1. Enter a Name: db-instance-2-option-group
+1. Enter a Description: Custom option group for Sql Server Web Edition, engine version: 15.00
+1. Select the Engine: sqlserver-web
+1. Major Engine Version: 15.00
+1. Click Create. This creates the option group.
+1. Select the newly created option group and then click Add Option.
+1. Select the Option name: SQLSERVER\_BACKUP\_RESTORE
+1. Select or create an IAM role:
+    1. Select an existing IAM role OR
+    1. Select Create a New Role
+        1. Enter a name: iam-sqlserver-backup-restore
+        1. S3 bucket: Select a previously created bucket.
+        1. S3 prefix (optional): Leave empty. If you enter a value, such as "backup", the IAM role will only have permissions for that folder and subfolders. If you then try to import from another folder off of the root, you will get an error with the message "Error Code Forbidden". If left empty, then any folder off of the root folder of the S3 bucket can be used for imports and exports.
+        1. Enable Encryption: unchecked (the default)
+1. Scheduling: Immediately
+1. Click Add Option
+
+### Associate the option group with the database instance
+
+1. In the navigation pane, choose Databases.
+1. Select the database instance and click Modify
+1. Scroll down to the Database optons section and select the newly added option group.
+1. Click Continue to preview the updates.
+1. Review the updates on the Summary of modifications page.
+1. Select Apply Immediately if you want the changes to be applied now or select Apply during the next scheduled maintenance window to apply later.
+1. Click Modify DB Instance.
+
+## Backing up and Restoring Sql Server database backups using S3
+
+Since RDS does not allow access to the OS on the database server, you have to run pre-defined stored procedures to perform backups, restores, and other tasks. This is also called importing and exporting in the AWS documentation.
+
+Reference: [Using native backup and restore](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.Procedural.Importing.html#SQLServer.Procedural.Importing.Native.Using)
+
+### Backing up a database
+
+Reference: [Backing up a database](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.Procedural.Importing.html#SQLServer.Procedural.Importing.Native.Using.Backup)
+
+Syntax:
+
+    exec msdb.dbo.rds_backup_database
+	    @source_db_name='database_name', 
+	    @s3_arn_to_backup_to='arn:aws:s3:::bucket_name/file_name.extension',
+	    [@kms_master_key_arn='arn:aws:kms:region:account-id:key/key-id'],	
+	    [@overwrite_s3_backup_file=0|1],
+	    [@type='DIFFERENTIAL|FULL'],
+	    [@number_of_files=n];
+
+Example:
+
+    exec msdb.dbo.rds_backup_database
+	    @source_db_name='Lookup', 
+	    @s3_arn_to_backup_to='arn:aws:s3:::[bucket_name]/[folder_name]/Lookup.bak',
+        @overwrite_s3_backup_file=1;
+
+
+
+### Restoring a database
+
+Reference: [Restoring a database](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.Procedural.Importing.html#SQLServer.Procedural.Importing.Native.Using.Restore)
+
+Syntax:
+
+    exec msdb.dbo.rds_restore_database
+        @restore_db_name='database_name',
+        @s3_arn_to_restore_from='arn:aws:s3:::bucket_name/file_name.extension',
+        @with_norecovery=0|1,
+        [@kms_master_key_arn='arn:aws:kms:region:account-id:key/key-id'],
+        [@type='DIFFERENTIAL|FULL'];
+
+Example:
+
+    use master
+    go
+
+    exec msdb.dbo.rds_restore_database    
+    @restore_db_name='Lookup', 
+    @s3_arn_to_restore_from='arn:aws:s3:::[bucket_name]/[folder_name]/Lookup.bak';
+
+### Tracking the status of tasks
+
+Reference: [Tracking the status of tasks](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.Procedural.Importing.html#SQLServer.Procedural.Importing.Native.Tracking)
+
+Syntax:
+
+    exec msdb.dbo.rds_task_status
+	    [@db_name='database_name'],
+	    [@task_id=ID_number];
+
+If the optional arguments are not used, the status for the most recent tasks are displayed.
+
+Example:
+
+    use master
+    go
+
+    exec msdb.dbo.rds_task_status
+                @db_name='Lookup';
+
 
 
 <!--
@@ -275,7 +435,7 @@ this step won't be needed.<br>
 -->
 
 
-## Set the RDS time zone
+## Set the EC2 Web Server time zone
 
 From [How to List and View Timezones](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/windows-set-time.html) - so the timezone doesn't default back to UTC.  
 
