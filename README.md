@@ -368,6 +368,8 @@ Example:
 
 Reference: [Restoring a database](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.Procedural.Importing.html#SQLServer.Procedural.Importing.Native.Using.Restore)
 
+**An existing database must be deleted first before restoring, otherwise the restore will fail. There is no overwrite option.**
+
 Syntax:
 
     exec msdb.dbo.rds_restore_database
