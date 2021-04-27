@@ -444,7 +444,41 @@ From [How to List and View Timezones](https://docs.aws.amazon.com/AWSEC2/latest/
     tzutil /l
     tzutil /s "Eastern Standard Time"
 
-The time zone for the RDS instance defaults to UTC. Evidently the only way to fix this is to create a new RDS instance and select the time zone you want. The alternative, is to handle the time zone offset in the application. So, any date time results from the database plus queries, updates, and inserts would need to handle the offset from the application layer. 
+The time zone for the RDS instance defaults to UTC. Evidently the only way to fix this is to create a new RDS instance and select the time zone you want. The alternative, is to handle the time zone offset in the application. So, any date time results from the database plus queries, updates, and inserts would need to handle the offset from the application layer.
+
+## Managing Sql Server Agent Jobs on RDS
+
+Reference: [Using Sql Server Agent](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.SQLServer.CommonDBATasks.Agent.html)
+
+Since RDS is running on a managed host in a DB instance, some actions in Sql Server Agent are not supported. The following is a brief list. See the reference link for more information:
+1. Email notifications from a Sql Server Agent Job are not supported.
+1. Sql Server Agent Job Operators are not supported.
+
+### Migrating a Sql Server Agent Job from a Windows Database Server to AWS RDS 
+To migrate a Sql Server Agent job from a Windows database server to AWS RDS, do the following:
+1. On the database server open Sql Server Management Studio and connect to the database server.
+1. On the EC2 instance, open Sql Server Management Studio and connect to the RDS instance. Open a new Query Editor window by clicking New Query.
+1. On the database server, under Sql Server Agent, click on the Jobs folder to list the current jobs.
+1. Right click the job that you want to migrate.
+1. Select Script Job as -> CREATE to -> New Query Editor Window (or to Clipboard)
+1. Copy the script to the clipboard. 
+1. On the EC2 instance, paste the script to the Query Editor window.
+1. Update the sp\_add\_job arguments:
+    1. Change the @notify\_level\_email argument value to 0 if it is not already set to that value.
+    1. Update the @owner\_login\_name argument value to the RDS master user, which is the administrator account you specified when the RDS instance was created.
+    1. Remove the @notify\_email\_operator\_name argument and value if found. Be sure to remove the trailing comma if it is not the last argument.
+    1. Ensure that the @database\_name argument values match the database names in the RDS instance. Each step should have a value.
+    1. Update the name of each step, as needed, to match the database name that it will be run against.
+1. Execute the script and check for errors.
+
+### Deleting a Job
+If a job needs to be deleted do not use the UI in Sql Server Management Studio since you will see the following error:
+
+    The EXECUTE permission was denied on the object 'xp_regread', database 'mssqlsystemresource', schema 'sys'.
+
+Instead, run the following script:
+
+    EXEC msdb.dbo.sp_delete_job @job_name = 'job_name';
 
 
 ## Core Data Schema  
