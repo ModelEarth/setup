@@ -11,16 +11,6 @@ Select the current server
 
 Click on Web Server (IIS) – Accept the default options
 
-### Under Features
-
-Click on .Net Framework 3.5 Features
-
-- Ensure the .Net Framework (includes .Net 2.0 and 3.0) option is checked
-
-Open the on .Net Framework 4.7 Features (some options will already be checked)
-
-- Check the ASP.NET 4.7 option
-
 ### Under Web Service Role (IIS) > Features > Web Server
 
 The following options should be checked except where noted.  
@@ -65,6 +55,22 @@ The following options should be checked except where noted.
     IIS 6 Metabase Compatibility
 
     IIS 6 Management Console
+
+### Under Features
+
+Click on .Net Framework 3.5 Features
+
+- Ensure the .Net Framework (includes .Net 2.0 and 3.0) option is checked
+
+Open the .Net Framework 4.7 Features (some options will already be checked)
+
+- Check the ASP.NET 4.7 option
+
+Open the Remote Server Administration Tools -> Feature Administration Tools
+
+- Click on SMTP Server Tools (this may be checked by default when enabling SMTP Server)
+
+Check the SMTP Server option and accept recommended dependent features be installed.
 
 ## Transferring IIS Settings From One Server to Another
 
