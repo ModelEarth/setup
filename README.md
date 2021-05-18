@@ -522,9 +522,18 @@ This may not be necessary now that most browsers and CDNs cache files.
 
 <h2>Setup Email</h2>
 Setup email to allow website to send emails.<br>
-Turn on the SMTP Service and set to Automatic Startup.<br>
-In C:\inetpub\maillroot, give the Network Service account full permissions.  
-This should be the same user account that the IIS Application Pools runs under.  
+
+1. Turn on the SMTP Service and set to Automatic Startup.
+1. In C:\inetpub\mailroot, give the Network Service account full permissions. This should be the same user account that the IIS Application Pools runs under.
+1. Set the domain in the IIS 6 SMTP server properties to be the same name as what is used to connect to the server computer using Remote Desktop.
+1. Ensure that a Reverse DNS (PTR) record is created to point back to the server domain.
+1. AWS blocks the SMTP port 25 by default, so complete the [Request to remove email sending limitations](https://console.aws.amazon.com/support/contacts?#/rdns-limits) form to get AWS to remove the block.
+
+The following tools can be helpful in looking at DNS and Reverse DNS records and testing the SMTP server:
+- [DigWebInterface](https://www.digwebinterface.com/) to view DNS and Reverse DNS records
+- [MxToolbox SuperTool](https://mxtoolbox.com/SuperTool.aspx) to view DNS and Reverse DNS info as well as other info and for testing the SMTP server.
+- [Microsoft SMTPDiag Tool](https://download.cnet.com/Microsoft-Exchange-Server-SMTPDiag-Tool/3000-2070_4-10731690.html) to test SMTP on the local server. Note that this utility is no longer available for download on the Microsoft website.
+
 
 <!--<div class="projecttime" style="display:none"><strong>Time:</strong>&nbsp; 1-2 hrs</div>-->
 
