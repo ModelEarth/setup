@@ -192,6 +192,21 @@ C:\WINDOWS\Microsoft.NET\Framework\<version>\aspnet_regiis -i<br><br>
 <div class="projecttime" style="display:none"><strong>Time:</strong> 2-4 hrs depending on updates needed</div><br>
 -->
 
+<h2>Ensure Windows Update runs automatically</h2>
+
+Instances launched from the latest Windows Server AMIs might show a Windows Update dialog message stating "Some settings are managed by your organization." and "Your organization has turned off automatic updates"
+
+Manually checking for updates still works however.
+
+To get rid of the message and enable automatic updates, follow the instructions on the [Windows Common Messages](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/common-messages.html#some-settings-managed-by-org) page.
+
+Also do the following:
+1. In Windows Update, click Advanced options
+    1. Enable "Give me updates for other Microsoft products when I updates Windows."
+    1. Enable "Automatically download updates, even over metered connections (charges may apply)." 
+    1. Ensure Update notifications are disabled.
+1. In Windows Update, click Change active hours
+    1. Select a start time of 6:00 AM and an end time of 12:00 AM and then click Save. Note, after selecting a time, click the checkmark at the bottom of the dropdown list to save your settings and close the dropdown list, or press the X character to discard your changes.
 
 <a name="database"></a>
 
