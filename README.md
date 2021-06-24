@@ -1,3 +1,5 @@
+#Steps for Configuring and Hosting on AWS
+
 <a name="server"></a>
 
 <!--Build a dev site locally or host on a server.  The following uses .NET 4.6.
@@ -8,7 +10,6 @@ Commented out: XP - Windows XP / Windows Server 2005
 Links: <a href="https://console.aws.amazon.com/ec2/v2/home?Instances#Instances:" target="_blank">Windows Instances EC2</a> | [RDS](https://console.aws.amazon.com/rds/home) | [AWS Billing Summary](https://console.aws.amazon.com/billing/home)
 
 ## AWS Windows Server Setup - EC2
-
 
 EC2 (Elastic Compute Cloud) provides virtual server hosting.  
 [Access EC2 with Microsoft Remote Desktop](https://www.freecodecamp.org/news/ec2-with-microsoft-remote-desktop/)  
