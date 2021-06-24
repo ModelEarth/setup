@@ -33,7 +33,7 @@ Later you'll set a permanent IP since it will otherwise change when the instance
 
 Login to <a href="https://console.aws.amazon.com/">AWS Console</a> and select <a href="https://console.aws.amazon.com/ec2/v2/home?#Addresses:">EC2 Elastic IPs</a> to view the public DNS IPv4 addresses that are mapped to the private IPs you use in IIS.  
 
-If Elastic IPs aren’t used, recycling or stopping/starting the instance will cause new IPs to be assigned to the server. This will not only cause websites to become inaccessible but also our ability to connect to the server using Remote Desktop. We’d have to use a different ip address each time the instance is restarted and the dns for each website would have to be updated.  
+If Elastic IPs aren’t used, recycling or stopping/starting the instance will cause new IPs to be assigned to the server. This will not only cause websites to become inaccessible but also prevent connections to the server using Remote Desktop. Until Elastic IPs are activated, you'd have to use a different ip address each time the instance is restarted and the dns for each website would have to be updated.  
 
 
 ### Add Additional IP Addresses
@@ -543,7 +543,10 @@ Setup email to allow website to send emails.<br>
 1. In C:\inetpub\mailroot, give the Network Service account full permissions. This should be the same user account that the IIS Application Pools runs under.
 1. Set the domain in the IIS 6 SMTP server properties to be the same name as what is used to connect to the server computer using Remote Desktop.
 1. Ensure that a Reverse DNS (PTR) record is created to point back to the server domain.
-1. AWS blocks the SMTP port 25 by default, so complete the [Request to remove email sending limitations](https://console.aws.amazon.com/support/contacts?#/rdns-limits) form to get AWS to remove the block.
+1. AWS blocks the SMTP port 25 by default, so complete the [Request to remove email sending limitations](https://console.aws.amazon.com/support/contacts?#/rdns-limits) form to get AWS to remove the block. You will likely receive a reply from AWS requesting the following:  
+
+- What specific type of configuration or setup have you implemented to prevent spam from originating from your EC2 / Lightsail resource?
+- What specific security measures do you have in place to avoid spam from originating from your EC2 / Lightsail resource?
 
 The following tools can be helpful in looking at DNS and Reverse DNS records and testing the SMTP server:
 - [DigWebInterface](https://www.digwebinterface.com/) to view DNS and Reverse DNS records
