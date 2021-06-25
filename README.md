@@ -548,6 +548,9 @@ Setup email to allow website to send emails.<br>
 - What specific type of configuration or setup have you implemented to prevent spam from originating from your EC2 / Lightsail resource?
 - What specific security measures do you have in place to avoid spam from originating from your EC2 / Lightsail resource?
 
+After AWS configures the reverse DNS record(s) requested to map a domain to an IP for outbound mail, 
+propagation of the update to DNSBL services that Amazon works with may take up to a week.  
+
 The following tools can be helpful in looking at DNS and Reverse DNS records and testing the SMTP server:
 - [DigWebInterface](https://www.digwebinterface.com/) to view DNS and Reverse DNS records
 - [MxToolbox SuperTool](https://mxtoolbox.com/SuperTool.aspx) to view DNS and Reverse DNS info as well as other info and for testing the SMTP server.
