@@ -550,15 +550,42 @@ Setup email to allow website to send emails.<br>
 
 1. Turn on the SMTP Service and set to Automatic Startup.
 1. In C:\inetpub\mailroot, give the Network Service account full permissions. This should be the same user account that the IIS Application Pools runs under.
-1. Set the domain in the IIS 6 SMTP server properties to be the same name as what is used to connect to the server computer using Remote Desktop.
-1. Ensure that a Reverse DNS (PTR) record is created to point back to the server domain.
-1. AWS blocks the SMTP port 25 by default, so complete the [Request to remove email sending limitations](https://console.aws.amazon.com/support/contacts?#/rdns-limits) form to get AWS to remove the block. You will likely receive a reply from AWS requesting the following:  
+1. Set the domain in the IIS 6 SMTP server properties to be the same name as what is used to connect to the server computer using Remote Desktop. 
+    1. Expand the server node.
+    1. Right click on the SMTP Virtual Server node.
+    1. Select the Properties menu item.
+    1. Click the Delivery tab
+    1. Click the Advanced button.
+    1. Enter the server name in the "Fully-qualified domain name" field. If using AWS, do not use the generic domain given by AWS for the web server. Since it is generic and just has an ip address in it as an identifier, receiving email servers will reject it. Instead, create a DNS A record such as myserver.dreamstudio.com that points to the web server.
+    1. Save the settings.
+1. Ensure that a Reverse DNS (PTR) record is created to point back to the server domain. If using AWS, refer to the next step for more details.
+1. AWS blocks the SMTP port 25 by default, so complete the [Request to remove email sending limitations](https://console.aws.amazon.com/support/contacts?#/rdns-limits) form to get AWS to remove the block. Ask AWS to remove the port block and also update the Reverse DNS PTR record so that the domain matches the SMTP server name, i.e. myserver.dreamstudio.com.
 
-- What specific type of configuration or setup have you implemented to prevent spam from originating from your EC2 / Lightsail resource?
-- What specific security measures do you have in place to avoid spam from originating from your EC2 / Lightsail resource?
+<b>Setup TLS for secure email transmission</b>
 
-After AWS configures the reverse DNS record(s) requested to map a domain to an IP for outbound mail, 
-propagation of the update to DNSBL services that Amazon works with may take up to a week.  
+1. Create a certificate using CertifyTheWeb or some other tool. Set the domain name to match the SMTP server name, i.e. myserver.dreamstudio.com. Deploy the certificate to the certificate store only. Try to use DNS authorization so that a website won't have to be set up for the server domain.
+1. Restart the server or IIS or the SMTP service.
+1. Open IIS 6.
+1. Expand the server node.
+1. Right click on the SMTP Virtual Server node.
+1. Select the Properties menu item.
+1. Click the Access tab. The Require TLS encryption checkbox should now be enabled. If it isn't, you may need to restart the server if you tried some of the other reset options after creating the certificate. You can also confirm that the certificate is in the Certificate store:
+    1. Open MMC console. (mmc.exe in the 'Run' box).
+    1. Under 'File', select 'Add/Remove Snap-in'.
+    1. Under the snap-in list, select 'Certificates'
+    1. Click Add and a configuration dialog will appear.
+    1. Select the Computer account option.
+    1. Click the Next button.
+    1. Choose Local Computer (it should be selected by default).
+    1. Click the Finish button.
+    1. Click OK on the Add or Remove Snap-ins dialog.
+    1. Once back at the MMC listing, expand the Certificates -> Personal -> Certificates node.
+    1. You should then see the certificate that you added. This is where IIS 6 looks for the certificate in order to enable the Require TLS encryption checkbox.
+1. Check the Require TLS encryption checkbox.
+1. Click the Delivery tab.
+1. Click the Outbound Security button and ensure that the TLS encryption checkbox is checked or check it if not checked.
+1. Save the settings.
+
 
 The following tools can be helpful in looking at DNS and Reverse DNS records and testing the SMTP server:
 - [DigWebInterface](https://www.digwebinterface.com/) to view DNS and Reverse DNS records
@@ -569,7 +596,7 @@ The following tools can be helpful in looking at DNS and Reverse DNS records and
 <!--<div class="projecttime" style="display:none"><strong>Time:</strong>&nbsp; 1-2 hrs</div>-->
 
     
-<h2>Directory Permission Setting</strong></h2>
+<h2>Directory Permission Setting</h2>
 Apply the following permission change to the following folders:<br>
 <ul>
     <li>Files</li>
