@@ -150,7 +150,19 @@ Another option is to use a domain that is not already using https at Cloudflare.
 (Need to test to confirm this it the case.)  
 <!-- 525 error handshake fail occurs before cert added for a domain requiring https in Cloudflare -->
 
+<h2>Not using CloudFlare?</h2>
 
+For domains that don't use CloudFlare or are not proxied through CloudFlare, ensure the following:
+1. Requests using HTTP are redirected to HTTPS.
+1. Add the following content security policy response headers for the Live and Review sites. Coordinate with the customer if part of the website is running on a different server for the Strict-Transport-Security header. Don't add the preload option until confirmed that all pages can be loaded using HTTPS:
+    1. View the website settings in IIS.
+    1. Open the HTTP Response Headers feature under the IIS section
+    1. Add the following headers if not already present:<br />
+        Name: Content-Security-Policy<br />
+        Value: upgrade-insecure-requests<br /><br />
+        Name: Strict-Transport-Security<br />
+        Value: max-age=63072000; includeSubDomains; preload
+    1. When requestng a page, you should see these responses header for the page request in the browser network tab.
 
 <h2>Install and Configure .NET, Run Windows Update</h2>
 
