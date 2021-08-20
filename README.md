@@ -66,6 +66,31 @@ Once the drives have been set up, you should be able to see them in Windows Expl
 
 [Post an issue](https://github.com/modelearth/setup/) if you'd like additional assistance with AWS EC2 Windows Server setup.   
 
+## Add more disk space to an EBS Volume
+
+If an EBS volume is running low on disk space, you can increase the volume size using the EC2 Management Console.
+
+1. Connect to the [Amazon EC2 Console](https://console.aws.amazon.com/ec2)
+1. Select the instance that contains the volume that you want to expand.
+1. Select the Storage tab
+1. Click on the Volume ID link for the volume that you want to expand.
+1. Click on the Actions dropdown.
+1. Click on the Modify Volume menu item. A dialog box will open.
+1. Enter the new size in the the Size field.
+1. Click on the Modify button and accept the confirmation prompt that appears.
+1. A success (or failure) message will then be displayed that indicates that the modification process has started. Click OK to close it.
+1. It can take a half hour or more for the increased space to be added to the volume, depending on the new size. The volume state will change from "In-use" to "In-use - optimizing ([percent complete]). You can click the refresh button periodically to see the progress. Note that the volume can still be accessed from Windows Explorer using a Remote Desktop connection.
+1. Once the modification process has been completed, the Windows operating system will then need to be updated to recognize the additional space.
+    1. Open a Remote Desktop connection to the instance.
+    1. Open an administrator command prompt.
+    1. Run the diskmgmt.msc command to open the Disk Management application.
+    1. Right click the volume that was expanded and select the Extend Volumne menu item.
+    1. Click Next. A diaglog will display that shows the amount of new space that can be added to the volume.
+    1. Click Next and then Finish to save the changes. The new volume size should now be visible in the Disk Management application as well as Windows Explorer and Windows Settings -> System -> Storage.
+
+Reference: [Expand the EBS root volume of your EC2 Windows instance](https://aws.amazon.com/premiumsupport/knowledge-center/expand-ebs-root-volume-windows/)
+
+
 ## Install and Configure IIS
 
 [See IIS install notes](iis/)  
