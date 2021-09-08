@@ -329,7 +329,7 @@ See "Connect to RDS instance" notes in core-admin
 
 ## Setup to allow importing/exporting SQL Database backups
 
-Since RDS does not allow access to the underlying operating system that hosts Sql Server, you need to use an S3 bucket to import or export database backups to and from RDS. After setting up components to allow RDS to access the S3 bucket, you will use stored procedures to import or export database backups to and from RDS.
+Since RDS does not allow access to the underlying operating system that hosts Sql Server, you need to use an S3 bucket to import or export database backups to and from RDS. After setting up components to allow RDS to access the S3 bucket, you will use stored procedures to import or export database backups to and from RDS. Note that importing and exporting is different from the automatic backups that RDS performs.
 
 References:
 
@@ -399,11 +399,11 @@ Note: There is no need to create an S3 bucket if an existing non-public S3 bucke
 
 ## Backing up and Restoring Sql Server database backups using S3
 
-Since RDS does not allow access to the OS on the database server, you have to run pre-defined stored procedures to perform backups, restores, and other tasks. This is also called importing and exporting in the AWS documentation.
+Since RDS does not allow access to the OS on the database server, you have to run pre-defined stored procedures to perform backups, restores, and other tasks. This is also called importing and exporting in the AWS documentation. Note that importing and exporting is different from the automatic backups that RDS performs.
 
 Reference: [Using native backup and restore](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.Procedural.Importing.html#SQLServer.Procedural.Importing.Native.Using)
 
-### Backing up a database
+### Backing up a database to S3
 
 Reference: [Backing up a database](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.Procedural.Importing.html#SQLServer.Procedural.Importing.Native.Using.Backup)
 
@@ -426,7 +426,7 @@ Example:
 
 
 
-### Restoring a database
+### Restoring a database from S3
 
 Reference: [Restoring a database](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.Procedural.Importing.html#SQLServer.Procedural.Importing.Native.Using.Restore)
 
@@ -470,7 +470,56 @@ Example:
     exec msdb.dbo.rds_task_status
                 @db_name='Lookup';
 
+## Restoring an RDS instance to a point in time
 
+If a database has errors, is missing data, or for some other reason needs to be restored to a previous version, you can restore the RDS instance to a point in time. Note that you cannot restore an individual database to a point in time. Instead, you can only restore the entire instance with all the contained databases to a point in time. This process creates a new RDS instance and contains the data and transaction log updates up to the point in time that you specify. After the instance has been restored, you can then rename or delete the current instance and then set the id of the newly restored instance to have the same id as the current instance. This will allow the websites and other applications to access the databases as they did before. No updates to the connection strings will need to be made to access the databases as long as the RDS instance id remains the same.
+
+Note that the Restore to point in time operation can take several hours to complete depending on the volume of transaction logs to be applied on a given database backup.
+
+1. Click on the Automated Backups link in the navigation page in the [RDS Console](https://console.aws.amazon.com/rds/home?region=us-east-1#). From there, you can see the earliest and the latest time that you can restore the instance from.
+1. Select the DB instance that you want to restore.
+1. Click Actions -> Restore to a point in time.
+1. Select the Latest restorable time option or the Custom option and enter a date and time to restore to. The time should be entered in as EST, which is the time zone for the instance.
+1. Specify the new instance id.
+1. Use the default values that are pre-populated from the current instance except for the following, which aren't pre-populated for some reason.
+    1. Backup -> Check Copy tags to snapshots
+    1. Log exports -> Check Agent Log
+    1. Log exports -> Check Error Log
+    1. Deletion protection -> Check enable deletion protection.
+1. Review your settings and then Click Restore to a point in time.
+1. For Scheduling of modifications, select Apply immediately or use the default to have the restore done during the next maintenance period.
+
+Once the restoration has completed, edit the restored instance and set the following options
+1. Check Enable Enhanced monitoring
+    1. Granularity: 60 seconds
+    1. Monitoring Role: rds-monitoring-role
+1. Check Enable Performance Insights
+    1. Retention Period - Default (7 days)
+    1. AWS KMS Key: (default) aws/rds
+1. Deletion protection -> Check enable deletion protection. This setting didn't seem to be saved during the restoration.
+1. Save the settings.
+
+To use the restored instance do the following:
+1. Stop the websites and disable scheduled tasks if they aren't already stopped.
+1. Edit the current RDS instance and copy the instance ID.
+1. Change the instance ID to some other value.
+1. Save the changes and monitor the status until it has completed and the new instance ID has been displayed.
+1. Edit the restored RDS instance and set the ID equal to the old instance.
+1. Save the changes and monitor the status until it has completed and the new instance ID has been displayed.
+1. Re-enable the websites and re-enable scheduled tasks.
+1. If desired, delete the old instance including any history and logs.
+
+Reference: [Restoring a DB instance to a specified time](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIT.html)
+
+## Restoring a single database to a point in time
+
+Only an entire RDS instance can be restored from a point in time. However, if only one database is corrupted within the RDS instance, the other databases will be restored to that previous time as well, which will probably cause a loss of data in the other databases even though they weren't corrupted. Inserts, updates, and deletes that occurred after the restore time will be lost on those databases. If possible, it may be better to restore a single database to a point in time by doing the following:
+1. Restore the RDS instance as described in the section above but don't change the ID of the current instance after restoring.
+1. Export the restored database to S3. See the "Backing up a database to S3" section above for more information.
+1. Delete the corrupted database in the current RDS instance.
+1. Restore the database from S3. See the "Restoring a database from S3" section above for more information.
+
+This will prevent the other databases that weren't corrupted from losing any of their updates.
 
 <!--
 Probably not used
