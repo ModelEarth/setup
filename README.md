@@ -85,11 +85,251 @@ If an EBS volume is running low on disk space, you can increase the volume size 
     1. Open an administrator command prompt.
     1. Run the diskmgmt.msc command to open the Disk Management application.
     1. Right click the volume that was expanded and select the Extend Volumne menu item.
-    1. Click Next. A diaglog will display that shows the amount of new space that can be added to the volume.
+    1. Click Next. A dialog will display that shows the amount of new space that can be added to the volume.
     1. Click Next and then Finish to save the changes. The new volume size should now be visible in the Disk Management application as well as Windows Explorer and Windows Settings -> System -> Storage.
 
 Reference: [Expand the EBS root volume of your EC2 Windows instance](https://aws.amazon.com/premiumsupport/knowledge-center/expand-ebs-root-volume-windows/)
 
+
+## Setup AWS Backup
+
+AWS Backup can be used to backup RDS, EC2, EBS, and other resources. The steps below describe how to setup AWS Backup for RDS since we're using a third party cloud backup service to backup the EBS volumes. AWS Backup can be setup to backup on a scheduled basis and use a retention period to purge older backups. In addition, notifications can be setup to send notification emails when a scheduled backup fails.
+
+1. Connect to [AWS Backup](https://console.aws.amazon.com/backup)
+1. Enable Services
+    1. Select My Account -> Settings in the navigation pane.
+    1. Click on Configure Resources.
+    1. Enable EC2, EBS, and RDS. Disable the other resources. We may decide to backup EC2 and EBS in the future.
+1. Configure a backup plan for an Amazon RDS database
+    1. Under My Account -> Backup plans, click Create Backup plan.
+    1. Select Build a new plan, or if desired, Start with a Template, and then select a template. You can then customize the template settings in the new plan after it has been saved. The steps below assume you selected Build a new plan.
+    1. Enter a name for the Backup plan: 
+    1. Configure a Backup rule. Additional rules can be added after the initial plan has been saved.
+        1. Enter a name for the Backup plan: RDS-Backup
+        1. Optionally enter backup plan tags.
+        1. Select the RDS backup vault if it exists, otherwise create a backup vault for RDS. This will allow you to group related backups together such as a vault for EBS and another for RDS.
+            1. Click Create new Backup vault.
+            1. Enter a new Backup vault name: RDS
+            1. Select the default encryption key.
+            1. Optionally enter Backup vault tags.
+            1. Click Create Backup vault.
+            1. On the Create Backup plan page, select the RDS backup vault.
+        1. Select the Backup frequency: Weekly
+        1. Select the days for the backup to occur: Sunday
+        1. Do not check "Enable continuous backups for point-in-time recovery (PITR)" since that is already configured for the RDS instance.
+        1. Select the Customize backup window option and enter the following options below:
+            1. Backup window start time: 8:00 AM UTC (corresponds to 3:00 AM EST)
+            1. Start within: 3 hours
+            1. Complete within: 8 hours
+            1. Transition to cold storage: Never
+            1. Retention period: 6 Months
+            1. Copy to destination: Leave blank
+    1. Advanced backup settings
+        1. Windows VSS: Leave unchecked.
+    1. Click Create plan
+
+
+Reference: [Amazon RDS Backup & Restore using AWS Backup](https://aws.amazon.com/getting-started/hands-on/amazon-rds-backup-restore-using-aws-backup/)
+
+### Setup Notifications for AWS Backup
+
+This section describes the steps needed in order for AWS Backup to notify email receipients when a backup has failed. You can also set this up to notify you when a backup occurs and whether it was successful or not.
+
+1. Create an SNS topic to send AWS Backup notifications to.
+    1. Open the [Amazon SNS console](https://console.aws.amazon.com/sns).
+    1. From the navigation pane, choose Topics.
+    1. Click Create topic.
+    1. Under Type, select the Standard option.
+    1. Enter a Name: AWS-Backup-Notifications
+    1. Enter an optional Display Name if using SMS (text) notifications.
+    1. Under Encryption, select the Disable encryption option (the default).
+    1. Under Access Policy, use the default settings. This will be updated in later steps.
+    1. Under Delivery retry policy (HTTTP/S) use the default settings.
+    1. Under Delivery status logging, use the default settings.
+    1. Add any optional tags.
+    1. Choose Create topic.
+    1. Select the topic you just created.
+    1. Under the Details section, copy the value for the ARN (Amazon Resource Name). You will need this value for later steps.
+    1. Above the Details pane, choose Edit.
+    1. Expand Access policy.
+    1. Replace the existing JSON with the following and update the Resource value with the Topic ARN that you copied previously:
+    ```
+    {
+        "Version": "2008-10-17",
+        "Id": "__default_policy_ID",
+        "Statement": [
+          {
+            "Sid": "__default_statement_ID",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "backup.amazonaws.com"
+            },
+            "Action": "SNS:Publish",
+            "Resource": "Enter the topic ARN here"
+          }   
+        ]
+    }
+    ```
+    18. Click Save changes
+   
+1. Configure your backup vault to send notifications to the SNS topic.
+    1. [Install](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) the AWS Command Line Interface (AWS CLI) on the AWS EC2 instance. Note that on the install page, you will need to click a series of links to get to the actual install page which is the following for CLI Version 2: [Install AWS CLI Version 2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
+    1. [Configure](#configuringtheawscommandlineinterfacecli) AWS CLI which will allow you to use AWS CLI.
+    1. Using the AWS CLI, run the put-backup-vault-notifications command with --backup-vault-events set to BACKUP\_JOB\_COMPLETED. Note that the optional --profile option is used. Refer to the [Configuring the AWS Command Line Interface (CLI)](#configuringtheawscommandlineinterfacecli) section for more information. Replace the following values in the example command:
+
+        <b>--profile:</b> Optional, specify the name of the CLI profile to use. If not specified, the default profile is used.
+        <b>--backup-vault-name:</b> the name of your backup vault (Case sensitive)
+        <b>--sns-topic-arn:</b> the ARN of the SNS topic that you created
+
+    ```
+    aws backup --profile profilename put-backup-vault-notifications --backup-vault-name examplevault --sns-topic-arn arn:aws:sns:eu-west-1:111111111111:exampletopic --backup-vault-events BACKUP_JOB_COMPLETED
+    ```
+    3. Run the get-backup-vault-notifications command to confirm that notifications are configured:
+
+    ```
+    aws backup --profile profilename get-backup-vault-notifications --backup-vault-name examplevault
+    ```
+    The output should be similar to the following:
+
+    ```
+    {
+        "BackupVaultName": "examplevault",
+        "BackupVaultArn": "arn:aws:backup:eu-west-1:111111111111:backup-vault:examplevault",
+        "SNSTopicArn": "arn:aws:sns:eu-west-1:111111111111:exampletopic",
+        "BackupVaultEvents": [
+            "BACKUP_JOB_COMPLETED"
+        ]
+    }
+    ``` 
+
+1. Create an SNS subscription that filters notifications to backup jobs that are unsuccessful.
+    1. Open the [Amazon SNS console](https://console.aws.amazon.com/sns/).
+    1. From the navigation pane, choose Subscriptions.
+    1. Choose Create subscription.
+    1. For Topic ARN, select the SNS topic that you created.
+    1. For Protocol, select Email.
+    1. For Endpoint, enter the email address where you want to get email notifications about failed backup jobs.
+    1. Expand Subscription filter policy.
+    1. In the JSON editor, enter the following:
+
+        ```
+        {
+            "State": [
+               {
+                    "anything-but": "COMPLETED"
+               }
+            ]
+        }
+        ```
+    9.  Choose Create subscription.
+    10. The email address that you entered in step 6 will receive a subscription confirmation email. Be sure to confirm the SNS subscription.
+
+1. Test emails for notifications.
+    To test that you will receive an email notification when a backup fails, create two on-demand backups and then cancel one of them. You should only receive a notification for the backup that was cancelled.
+    1. Create an on-demand backup
+        1. Open the [AWS Backup Console](https://console.aws.amazon.com/backup/home?region=us-east-1).
+        1. On the navigation pane, click Protected Resources.
+        1. Click Create on-demand backup
+        1. Select the Resource Type: RDS
+        1. Select the Database (Instance) name.
+        1. Select Create backup now if not already selected.
+        1. Select the Retention Period: 1 Day
+        1. Select the Backup vault: RDS
+        1. Select the IAM role: Default (selected by default)
+        1. Optionally add tags
+        1. Click Create on-demand backup
+        1. Repeat the previous steps to create a second on-demand backup.
+    1. Cancel one of the on-demand backups
+        1. On the AWS Backup Console, clik Jobs on the navigation page.
+        1. Click on one of the jobs that you want to stop.
+        1. In the backup job's Detail pane, click the Stop button.
+        1. You should receive just one failure notification from AWS. The notification can be sent immediately or within an hour or so.
+        1. If you do not receive a notification, in the SNS subscription, try clearing the Subscription filter policy and then create another on-demand backup job and allow it to complete successfully. You should then receive a success notification from AWS.
+
+Reference: [Get notifications for AWS Backup jobs that failed](https://aws.amazon.com/premiumsupport/knowledge-center/aws-backup-failed-job-notification/)
+
+## Setup AWS Command Line Interface (CLI)
+
+In order to use the AWS Command Line Interface (CLI), you will need to install and configure it. The sections below describe how to do that.
+
+### Install AWS Command Line Interface (CLI)
+
+ [Install](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) the AWS Command Line Interface (AWS CLI) on the AWS web server instance. Note that on the install page, you will need to click a series of links to get to the actual install page which is the following for CLI Version 2: [Install AWS CLI Version 2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
+
+### Configuring the AWS Command Line Interface (CLI)
+
+1. After installing the CLI, you will need to configure it. Before that can be done, you will need to [create an Administrators Group and an Administrator Identity and Access Mangagement(IAM) user](#creatinganadministratoriamuserandgroup) if not already created.
+1. Open the [IAM Console](https://console.aws.amazon.com/iam/)
+1. In the navigation page, click Users.
+1. Click Add users.
+1. Enter the username: aws\_sdk\_user, aws\_cli\_user, or something similar
+1. Under Select AWS access type, select Access key - Programmatic access. This will allow this IAM user to use the AWS CLI.
+1. Click Next: Permissions.
+1. Select Add user to group if not already selected.
+1. Under the Add user to group section, Select the Administrators group. If you don't see this group refer to the first step to add it.
+1. Click Next: Tags
+1. Optionally add tags.
+1. Click Next: Review.
+1. Verify the user group memberships to be added to the new user. When you are ready to proceed, click Create user.
+1. In the Users pane, Click the user you just created.
+1. Select the Security credentials tab.
+1. Click Create access key
+1. To view the new access key pair, choose Show. You will not have access to the secret access key again after this dialog box closes. Your credentials will look something like this:
+    <ul>
+        <li>Access key ID: AKIAIOSFODNN7EXAMPLE</li>
+        <li>Secret access key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</li>
+    </ul>
+1. Copy the Access key ID and Secret access key and store it somewhere secure or click Download .csv file.
+    <ul>
+        <li>Store the keys in a secure location. You will not have access to the secret access key again after this dialog box closes.</li>
+        <li>Keep the keys confidential in order to protect your AWS account and never email them. Do not share them outside your organization, even if an inquiry appears to come from AWS or Amazon.com. No one who legitimately represents Amazon will ever ask you for your secret key.</li>
+    </ul>
+1. Click Close to close the access key dialog.
+1. Now that you have the Access key and Secret access key, you can run aws configure
+    1. Open an administrator command prompt on the web server.
+    1. Run aws configure and substitute the actual Access key and Secret access key for the example keys below. The command will prompt you for each of the values. The optional --profile argument creates a collection of settings stored under the name that you specify, such as aws\_sdk\_user. If --profile is not used, then the default profile will be updated instead. For updating system settings such as for aws backup, it may be best to create a named profile rather than using the default profile. That way, you can use the default profile when running the aws cli as yourself rather than using the credentials of the named profile. If you use the CLI to update system settings as yourself, and your account is deleted later, those settings may become disabled (not sure if that actually happens or not, but it makes sense). So, create a default profile for your IAM account (don't specify the --profile option) and create a profile for a "system" user such as aws\_sdk\_user (specify the --profile option).
+    
+    ```
+    aws configure --profile profilename
+    AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+    AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    Default region name [None]: us-east-1
+    Default output format [None]: json
+    ```
+
+References:
+[Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+[Configuration basics](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
+
+## Creating an Administrator IAM User and Group
+
+It is strongly recommended that the Root user be used only in the few circumstances where Root user access is required and an IAM User for routine adminstrative and other tasks is used instead.
+
+1. Open the [IAM Console](https://console.aws.amazon.com/iam/) as the Root user. You will need to log out and log back in if you are currently logged in as an IAM user.
+1. Allow IAM Users and Roles to access billing information. By itself, this setting will not allow IAM users access to the billing pages. Additional permissions must be granted to allow that. But, with this option turned off, no IAM users can access the billing information even if they have administrative access.
+    1. On the navigation bar, choose your account name, and then choose My Account.
+    2. Scroll down the page and for the IAM User and Role Access to Billing Information, click Edit. You must be signed in as the root user for this section to be displayed on the account page.
+    1. Select the check box to Activate IAM Access and choose Update.
+    1. On the navigation bar, choose Services and then IAM to return to the IAM console.
+1. Use the following steps to create an Administrator user and Administrators group.
+    1. In the IAM Console navigation pane, choose Users and then click Add users.
+    1. For User name, type Administrator.
+    1. Select the check box for AWS Management Console access, select Custom password, and then type your new password in the text box.
+    1. By default, AWS forces the new user to create a new password when first signing in. You can optionally clear the check box next to User must create a new password at next sign-in to allow the new user to reset their password after they sign in.
+    1. Click Next: Permissions.
+    1. Click Add user to group.
+    1. Click Create group.
+    1. In the Create group dialog box, for Group name type Administrators.
+    1. Select the check box for the AdministratorAccess policy.
+    1. Click Create group.
+    1. Back on the page with the list of user groups, select the check box for your new user group. Choose Refresh if you don't see the new user group in the list.
+    1. Click Next: Tags.
+    1. Optionally add tags.
+    1. Click Next: Review.
+    1. Verify the user group memberships to be added to the new user. When you are ready to proceed, click Create user.
+    1. (Optional) On the Complete page, you can download a .csv file with login information for the user, or send email with login instructions to the user.
+
+Reference: [Creating your first IAM admin user and user group](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html)
 
 ## Install and Configure IIS
 
@@ -313,7 +553,7 @@ Enter the Allocated Storage: 100 GB (20 GB default) 100 GB per the recommendatio
 
 Add an MSSQL inbound rule to the default security group.  
 
-Add the option group to create the S3 bucket etc.<!-- Don did this-->  
+Add the option group to create the S3 bucket etc. Refer to the "Setup to allow importing/exporting SQL Database backups section" below.<!-- Don did this-->  
 
 [Connecting to a DB Instance running Microsoft SQL Server](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToMicrosoftSQLServerInstance.html)  
 After Amazon RDS provisions your DB instance, you can use any standard SQL client application to connect to the DB instance.  
