@@ -502,6 +502,8 @@ Also do the following:
 
 ## Setup RDS for SQL Databases
 
+You'll be able to access the database by remote connecting to the EC2 machine, then use Microsoft SQL Server Managment Studio to connect to RDS.
+
 <!--about/setup/Database.aspx'>Database Setup-->
 
 
