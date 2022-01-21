@@ -98,7 +98,7 @@ Reference: [Expand the EBS root volume of your EC2 Windows instance](https://aws
 
 AWS Backup can be used to backup RDS, EC2, EBS, and other resources. The steps below describe how to setup AWS Backup for RDS since we're using a third party cloud backup service to backup the EBS volumes. AWS Backup can be setup to backup on a scheduled basis and use a retention period to purge older backups. In addition, notifications can be setup to send notification emails when a scheduled backup fails.
 
-1. Connect to [AWS Backup](https://console.aws.amazon.com/backup)
+1. Connect to [AWS Backup > Backup plans](https://console.aws.amazon.com/backup/home?#/backupplan)  
 1. Enable Services
     1. Select My Account -> Settings in the navigation pane.
     1. Click on Configure Resources.
@@ -507,7 +507,7 @@ You'll be able to access the database by remote connecting to the EC2 machine, t
 <!--about/setup/Database.aspx'>Database Setup-->
 
 
-**The cost is about over 60% more if SQL Server reside on the EC2 Windows server due to the large size required.**  
+**The cost is over 60% more if SQL Server reside on the EC2 Windows server due to the large size required.**  
 
 Instead, use a medium-sized EC2 instance and create a medium-sized RDS instance for your data.  
 
@@ -968,7 +968,7 @@ If you don't switch to static IPs, your install from the snapshot will return a 
 
 #### Deployment Updates
 
-2021 - EC2/RDS setup notes  
+2021 - Setup notes for AWS hosting uwing EC2 virtual machine and RDS SQL database.  
 2020 - Streamlining server migration.  
 2019 - Updates for deployment from Github. 
 
