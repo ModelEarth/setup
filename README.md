@@ -98,6 +98,10 @@ Reference: [Expand the EBS root volume of your EC2 Windows instance](https://aws
 
 AWS Backup can be used to backup RDS, EC2, EBS, and other resources. The steps below describe how to setup AWS Backup for RDS since we're using a third party cloud backup service to backup the EBS volumes. AWS Backup can be setup to backup on a scheduled basis and use a retention period to purge older backups. In addition, notifications can be setup to send notification emails when a scheduled backup fails.
 
+**RDS Backups:**
+- RDS automated backups are [enabled](img/database/RDS-7day-backup.png) for point-in-time recovery with a retention period of 7 days.
+- We also run a weekly RDS Backup which is retained for 6 months.  
+
 1. Connect to [AWS Backup > Backup plans](https://console.aws.amazon.com/backup/home?#/backupplan)  
 1. Enable Services
     1. Select My Account -> Settings in the navigation pane.
