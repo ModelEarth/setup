@@ -21,7 +21,7 @@ Simple Notifications
 https://console.aws.amazon.com/sns/v3/home?region=us-east-1#/subscriptions
 -->
 
-[To save over $150 per month, migrate EC2 to the Reserved Model](https://danielmiessler.com/blog/saved-ec2-bill-5-minutes-switching-reserved-instance/) - A one-year plan is $374. "The way to get to Reserved billing is counterintuitive. Basically, you have to pretend that you’re buying a new instance, of the Reserved type, with the exact same attributes of the one you want to convert. Upon making the purchase you will have converted the other one... So what then happens is that Amazon finds your running On Demand instance and converts it to a Reserved instance. And now if you go into billing you should see that reflected." We chose "Only show offerings that reserve capacity" and used the Availability Zone listed under the networking tab. [View settings](img/steps/reserved-instance.png). Do the same for RDS.
+[To save over $150 per month, migrate EC2 to the Reserved Model](https://danielmiessler.com/blog/saved-ec2-bill-5-minutes-switching-reserved-instance/) - A one-year reserved plan for the EC2 portion is $374 ($34/month). "The way to get to Reserved billing is counterintuitive. Basically, you have to pretend that you’re buying a new instance, of the Reserved type, with the exact same attributes of the one you want to convert. Upon making the purchase you will have converted the other one... So what then happens is that Amazon finds your running On Demand instance and converts it to a Reserved instance. And now if you go into billing you should see that reflected." We chose "Only show offerings that reserve capacity" and used the Availability Zone listed under the networking tab. [View settings](img/steps/reserved-instance.png). Do the same for RDS.
 
 
 ### Get the Public IP
@@ -96,7 +96,9 @@ Reference: [Expand the EBS root volume of your EC2 Windows instance](https://aws
 
 ## Setup AWS Backup
 
-AWS Backup can be used to backup RDS, EC2, EBS, and other resources. The steps below describe how to setup AWS Backup for RDS since we're using a third party cloud backup service to backup the EBS volumes. AWS Backup can be setup to backup on a scheduled basis and use a retention period to purge older backups. In addition, notifications can be setup to send notification emails when a scheduled backup fails.
+AWS Backup can be used to backup RDS, EC2, EBS, and other resources. The steps below describe how to setup AWS Backup for RDS.  
+
+We sometimes use a third party cloud backup service (CrashPlan.com) to backup EBS volumes (for storage of uploaded images). AWS EC2 Backup can also be setup to backup on a scheduled basis and use a retention period to purge older backups. In addition, notifications can be setup to send notification emails when a scheduled backup fails.
 
 **RDS Backups:**
 - RDS automated backups are [enabled](img/database/RDS-7day-backup.png) for point-in-time recovery with a retention period of 7 days.
