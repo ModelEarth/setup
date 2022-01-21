@@ -215,15 +215,15 @@ This section describes the steps needed in order for AWS Backup to notify email 
     1. Expand Subscription filter policy.
     1. In the JSON editor, enter the following:
 
-        ```
-        {
-            "State": [
-               {
-                    "anything-but": "COMPLETED"
-               }
-            ]
-        }
-        ```
+    ```
+    {
+        "State": [
+           {
+                "anything-but": "COMPLETED"
+           }
+        ]
+    }
+    ```
     9.  Choose Create subscription.
     10. The email address that you entered in step 6 will receive a subscription confirmation email. Be sure to confirm the SNS subscription.
 
@@ -530,7 +530,7 @@ Enter the Allocated Storage: 100 GB (20 GB default) 100 GB per the recommendatio
 1. Select the VPC Security Group – Select Choose existing option - default (this is the default option) or Select Create new option to create a new security group just for RDS. For future instances, it may be better to create a new VPC Security Group so a more descriptive name can be used other than "default"  
 1. Select the Availability Zone: us-east-1f (Same as the EC2 instances)
 1. Under Additional configuration, use the default value for the Database port  
-1. Microsoft SQL Server Windows Authentication: Unchecked (the default option). Estimated cost to enable is $288/month as of 4/2021.  
+1. Microsoft SQL Server Windows Authentication: Unchecked (the default option). Estimated cost to enable is $288/month as of 4/2021. (Use a separate RDS instance to significantly reduce this expense and turn on Reserved Instances).  
 1. Additional configuration:
     1. DB parameter group: default value
     1. Option group: default value
