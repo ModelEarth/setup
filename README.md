@@ -395,7 +395,12 @@ In IIS, use only domain names.  No IPs.
 The IIS entries can be all https. Avoid using http in IIS.  
 (Confirming this. Not sure if needed when first adding cert.)  
 
-Unchecked "Require Server Name Indication".  (Important, otherwise only the one domain will work)
+<p>Check "Require Server Name Indication".  Allows the bindings for a site to use different certificates. Also, if left unchecked, IIS will possibly update other
+bindings for different sites that are also unchecked with the same certificate as the site being updated. IIS will display a warning if that situation occurs:
+<i>"At least one other site is using the same HTTPS binding and the binding is configured with a different certificate. Are you sure that you want to reuse this HTTPS
+binding and reassign the other site or sites to use the new certificate?"</i>
+In some cases, that may be desirable so that you don't have to select the certificate for each site's bindings. For other cases, it may end up updating a binding
+with the wrong certificate.</p>
 
 "Not Found" occurs initially when https match is not present for a domain in IIS.  
 To solve, add an https 433 binding in IIS matching the domain.  
