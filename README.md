@@ -185,7 +185,7 @@ This section describes the steps needed in order for AWS Backup to notify email 
 1. Configure your backup vault to send notifications to the SNS topic.
     1. [Install](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) the AWS Command Line Interface (AWS CLI) on the AWS EC2 instance. Note that on the install page, you will need to click a series of links to get to the actual install page which is the following for CLI Version 2: [Install AWS CLI Version 2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
     1. [Configure](#configuringtheawscommandlineinterfacecli) AWS CLI which will allow you to use AWS CLI.
-    1. Using the AWS CLI, run the put-backup-vault-notifications command with --backup-vault-events set to BACKUP\_JOB\_COMPLETED. Note that the optional --profile option is used. Refer to the [Configuring the AWS Command Line Interface (CLI)](#configuringtheawscommandlineinterfacecli) section for more information. Replace the following values in the example command:
+    1. Using the AWS CLI, run the put-backup-vault-notifications command with --backup-vault-events set to BACKUP\_JOB\_COMPLETED. Refer to the [Configuring the AWS Command Line Interface (CLI)](#configuringtheawscommandlineinterfacecli) section for more information. Replace the following values in the example command:
 
         <b>--profile:</b> Optional, specify the name of the CLI profile to use. If not specified, the default profile is used.
         <b>--backup-vault-name:</b> the name of your backup vault (Case sensitive)
@@ -194,7 +194,7 @@ This section describes the steps needed in order for AWS Backup to notify email 
     ```
     aws backup --profile profilename put-backup-vault-notifications --backup-vault-name examplevault --sns-topic-arn arn:aws:sns:eu-west-1:111111111111:exampletopic --backup-vault-events BACKUP_JOB_COMPLETED
     ```
-    3. Run the get-backup-vault-notifications command to confirm that notifications are configured:
+    4. Run the get-backup-vault-notifications command to confirm that notifications are configured:
 
     ```
     aws backup --profile profilename get-backup-vault-notifications --backup-vault-name examplevault
@@ -211,7 +211,7 @@ This section describes the steps needed in order for AWS Backup to notify email 
         ]
     }
     ```
-    4. Repeat the commands above to create notifications for the EC2 and EBS backup vaults. 
+    5. Repeat steps 3 and 4 to create notifications for the EC2 and EBS backup vaults. 
 
 1. Create an SNS subscription that filters notifications to backup jobs that are unsuccessful.
     1. Open the [Amazon SNS console](https://console.aws.amazon.com/sns/).
