@@ -108,7 +108,7 @@ We sometimes use a third party cloud backup service (CrashPlan.com) to backup EB
 1. Enable Services
     1. Select My Account -> Settings in the navigation pane.
     1. Click on Configure Resources.
-    1. Enable EC2, EBS, and RDS. Disable the other resources. We may decide to backup EC2 and EBS in the future.
+    1. Enable EC2, EBS, and RDS. Disable the other resources.
 1. Configure a backup plan for an Amazon RDS database
     1. Under My Account -> Backup plans, click Create Backup plan.
     1. Select Build a new plan, or if desired, Start with a Template, and then select a template. You can then customize the template settings in the new plan after it has been saved. The steps below assume you selected Build a new plan.
@@ -136,6 +136,7 @@ We sometimes use a third party cloud backup service (CrashPlan.com) to backup EB
     1. Advanced backup settings
         1. Windows VSS: Leave unchecked.
     1. Click Create plan
+1. Repeat the previous step to create backup plans for EC2 and optionally, EBS. Create separate backup vaults for EC2 and EBS.
 
 
 Reference: [Amazon RDS Backup & Restore using AWS Backup](https://aws.amazon.com/getting-started/hands-on/amazon-rds-backup-restore-using-aws-backup/)
@@ -209,7 +210,8 @@ This section describes the steps needed in order for AWS Backup to notify email 
             "BACKUP_JOB_COMPLETED"
         ]
     }
-    ``` 
+    ```
+    4. Repeat the commands above to create notifications for the EC2 and EBS backup vaults. 
 
 1. Create an SNS subscription that filters notifications to backup jobs that are unsuccessful.
     1. Open the [Amazon SNS console](https://console.aws.amazon.com/sns/).
