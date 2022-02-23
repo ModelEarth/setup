@@ -811,10 +811,17 @@ this step won't be needed.<br>
 1. Backup the database on the current server, or locate an existing .BAK file.
 1. Copy the backup to an S3 bucket.
     1. Connect to S3 on the current server.
-    1. Select the bucket and folder to upload to <!--sqlserver-rds-bucket -> FromDarby folder -->
+    1. Select the bucket and folder to upload to 
+    <!--sqlserver-rds-bucket -> FromDarby folder -->
     1. Click the Upload button, click "Add files" and select the .bak backup file. Click Upload.
 1. Open SQL Management Studio to connect to RDS from the new server.
 1. Delete the current database on the new server if it exists.
+If database "in use" prevents Delete, Try running this SQL:  
+USE master;  
+ALTER DATABASE Atlanta SET SINGLE_USER WITH ROLLBACK IMMEDIATE;  
+DROP DATABASE Atlanta;  
+Refresh, database should now be gone.  (Try without Single_User line. Return an error, but worked.)
+
 1. [Restore the database from S3](#restoring-a-database-from-s3).
 1. Reset the login and user mappings in Sql Server Studio on the new server for the restored database.
     1. Select the restored database.
@@ -925,9 +932,9 @@ Setup email to allow website to send emails.<br>
     1. Enter the server name in the "Fully-qualified domain name" field. If using AWS, do not use the generic domain given by AWS for the web server. Since it is generic and just has an ip address in it as an identifier, receiving email servers will reject it. Instead, create a DNS A record such as myserver.dreamstudio.com that points to the web server.
     1. Save the settings.
 1. Ensure that a Reverse DNS (PTR) record is created to point back to the server domain. If using AWS, refer to the next step for more details.
-1. AWS blocks the SMTP port 25 by default, so complete the [Request to remove email sending limitations](https://console.aws.amazon.com/support/contacts?#/rdns-limits) form to get AWS to remove the block. Ask AWS to remove the port block and also update the Reverse DNS PTR record so that the domain matches the SMTP server name, i.e. myserver.dreamstudio.com.
+1. AWS blocks the SMTP port 25 by default, so complete the [Request to remove email sending limitations](https://console.aws.amazon.com/support/contacts?#/rdns-limits) form to get AWS to remove the block. Ask AWS to remove the port block and also update the Reverse DNS PTR record so that the domain matches the SMTP server name, i.e. myserver.dreamstudio.com.  
 
-<b>Setup TLS for secure email transmission</b>
+### Setup TLS for secure email transmission
 
 1. Create a certificate using CertifyTheWeb or some other tool. Set the domain name to match the SMTP server name, i.e. myserver.dreamstudio.com. Deploy the certificate to the certificate store only. Try to use DNS authorization so that a website won't have to be set up for the server domain.
 1. Restart the server or IIS or the SMTP service.
