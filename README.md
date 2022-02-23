@@ -808,14 +808,12 @@ this step won't be needed.<br>
 
 ## Moving a Database to RDS
 
-1. Backup the database on the current server.
+1. Backup the database on the current server, or locate an existing .BAK file.
 1. Copy the backup to an S3 bucket.
     1. Connect to S3 on the current server.
-    1. Select the bucket and folder to upload to (sqlserver-rds-bucket -> FromDarby folder)
-    1. Click the Upload button.
-        1. Click the Add Files button and select the backup file.
-        1. Click Open
-    1. Use the default options and click the Upload button to upload the file to S3.
+    1. Select the bucket and folder to upload to <!--sqlserver-rds-bucket -> FromDarby folder -->
+    1. Click the Upload button, click "Add files" and select the .bak backup file. Click Upload.
+1. Open SQL Management Studio to connect to RDS from the new server.
 1. Delete the current database on the new server if it exists.
 1. [Restore the database from S3](#restoring-a-database-from-s3).
 1. Reset the login and user mappings in Sql Server Studio on the new server for the restored database.
