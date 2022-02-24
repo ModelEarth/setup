@@ -684,6 +684,62 @@ Example:
 
 
 
+<!--
+Probably not used
+
+Install as standalone server<br>
+Use the default instance and use a different drive if possible for user databases and backups.<br>
+<ul>
+    <li>Data and Transaction Log files: E:\Data</li>
+    <li>Backup Files: E:\Bkup</li>
+</ul>
+Install the following:<br>
+<ul>
+    <li>Full Text</li>
+    <li>Client tools connectivity</li>
+    <li>Integration Services</li>
+    <li>Client Tools Backwards Compatibility</li>
+    <li>Documentation Components</li>
+</ul>
+From the installation program, install Sql Server Management Studio (SSMS). For Sql Server 2016+, SSMS is a separate install  
+
+Restore Databases, including Lookup<br>
+Create Backup Maintenance Plans and Schedules<br>
+Create logins<br>
+Setup Network Connectivity and update Firewall settings. If the website and server will reside on the same server,
+this step won't be needed.<br>
+-->
+
+## Moving a Database to RDS
+
+1. Backup the database on the current server, or locate an existing .BAK file.
+1. Copy the backup to an S3 bucket.
+    1. Connect to S3 on the current server.
+    1. Select the bucket and folder to upload to 
+    <!--sqlserver-rds-bucket -> FromDarby folder -->
+    1. Click the Upload button, click "Add files" and select the .bak backup file. Click Upload.
+1. Open SQL Management Studio to connect to RDS from the new server.
+1. Delete the current database on the new server if it exists.
+If database "in use" prevents Delete, Try running this SQL:  
+USE master;  
+ALTER DATABASE Atlanta SET SINGLE_USER WITH ROLLBACK IMMEDIATE;  
+DROP DATABASE Atlanta;  
+Refresh, database should now be gone.  (Try without Single_User line. Returned an error, but worked.)
+
+1. [Restore the database from S3](#restoring-a-database-from-s3).
+1. Reset the login and user mappings in Sql Server Studio on the new server for the restored database.
+    1. Select the restored database.
+    1. Open the Security > Users node and then delete the user that is used to connect to the database in Web.config. Do the same for the Lookup database if it was restored.
+    1. Open the Security node that applies to all databases.
+        1. Open the Logins node.
+        1. If the user login does not appear, refresh the Logins list. The login may need to be added if it does not exist. If the login needs to be added, choose Sql Server Authentication and enter the username and password so that it corresponds to the values in Web.config.
+        1. Right click the user login and choose Properties. 
+        1. In the "User Mappings" section, assign the user login to the restored database.
+            1. Check db_datareader, db_datawriter and [database name]SP. Leave "public" checked. Check ExecStoredProc if present.
+        1. Click OK to save the User Mappings. If you see an error, such as for the Lookup database, be sure to delete the corresponding user in the Lookup database and try again.
+
+
+
 ### Restoring a database from S3
 <a id="restoring-a-database-from-s3"></a>
 
@@ -782,60 +838,6 @@ Only an entire RDS instance can be restored from a point in time. However, if on
 1. Restore the database from S3. See the [Restore a database from S3](#restoring-a-database-from-s3) section for more information.
 
 This will prevent the other databases that weren't corrupted from losing any of their updates.
-
-<!--
-Probably not used
-
-Install as standalone server<br>
-Use the default instance and use a different drive if possible for user databases and backups.<br>
-<ul>
-    <li>Data and Transaction Log files: E:\Data</li>
-    <li>Backup Files: E:\Bkup</li>
-</ul>
-Install the following:<br>
-<ul>
-    <li>Full Text</li>
-    <li>Client tools connectivity</li>
-    <li>Integration Services</li>
-    <li>Client Tools Backwards Compatibility</li>
-    <li>Documentation Components</li>
-</ul>
-From the installation program, install Sql Server Management Studio (SSMS). For Sql Server 2016+, SSMS is a separate install  
-
-Restore Databases, including Lookup<br>
-Create Backup Maintenance Plans and Schedules<br>
-Create logins<br>
-Setup Network Connectivity and update Firewall settings. If the website and server will reside on the same server,
-this step won't be needed.<br>
--->
-
-## Moving a Database to RDS
-
-1. Backup the database on the current server, or locate an existing .BAK file.
-1. Copy the backup to an S3 bucket.
-    1. Connect to S3 on the current server.
-    1. Select the bucket and folder to upload to 
-    <!--sqlserver-rds-bucket -> FromDarby folder -->
-    1. Click the Upload button, click "Add files" and select the .bak backup file. Click Upload.
-1. Open SQL Management Studio to connect to RDS from the new server.
-1. Delete the current database on the new server if it exists.
-If database "in use" prevents Delete, Try running this SQL:  
-USE master;  
-ALTER DATABASE Atlanta SET SINGLE_USER WITH ROLLBACK IMMEDIATE;  
-DROP DATABASE Atlanta;  
-Refresh, database should now be gone.  (Try without Single_User line. Returned an error, but worked.)
-
-1. [Restore the database from S3](#restoring-a-database-from-s3).
-1. Reset the login and user mappings in Sql Server Studio on the new server for the restored database.
-    1. Select the restored database.
-    1. Open the Security > Users node and then delete the user that is used to connect to the database in Web.config. Do the same for the Lookup database if it was restored.
-    1. Open the Security node that applies to all databases.
-        1. Open the Logins node.
-        1. If the user login does not appear, refresh the Logins list. The login may need to be added if it does not exist. If the login needs to be added, choose Sql Server Authentication and enter the username and password so that it corresponds to the values in Web.config.
-        1. Right click the user login and choose Properties. 
-        1. In the "User Mappings" section, assign the user login to the restored database.
-            1. Check db_datareader, db_datawriter and [database name]SP. Leave "public" checked. Check ExecStoredProc if present.
-        1. Click OK to save the User Mappings. If you see an error, such as for the Lookup database, be sure to delete the corresponding user in the Lookup database and try again.
 
 
 ## Set the EC2 Web Server time zone
