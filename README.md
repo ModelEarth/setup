@@ -693,6 +693,8 @@ Reference: [Restoring a database](https://docs.aws.amazon.com/AmazonRDS/latest/U
 
 Syntax:
 
+    use master
+    go
     exec msdb.dbo.rds_restore_database
         @restore_db_name='database_name',
         @s3_arn_to_restore_from='arn:aws:s3:::bucket_name/file_name.extension',
@@ -700,14 +702,15 @@ Syntax:
         [@kms_master_key_arn='arn:aws:kms:region:account-id:key/key-id'],
         [@type='DIFFERENTIAL|FULL'];
 
-Example:
+Example, run as SQL. You can avoid including with_norecovery, region, etc.
 
     use master
     go
-
     exec msdb.dbo.rds_restore_database    
     @restore_db_name='Lookup', 
     @s3_arn_to_restore_from='arn:aws:s3:::[bucket_name]/[folder_name]/Lookup.bak';
+
+Allow about 40 seconds, then hit refresh on "Databases" to see the restored database.  
 
 ### Tracking the status of tasks
 
@@ -820,7 +823,7 @@ If database "in use" prevents Delete, Try running this SQL:
 USE master;  
 ALTER DATABASE Atlanta SET SINGLE_USER WITH ROLLBACK IMMEDIATE;  
 DROP DATABASE Atlanta;  
-Refresh, database should now be gone.  (Try without Single_User line. Return an error, but worked.)
+Refresh, database should now be gone.  (Try without Single_User line. Returned an error, but worked.)
 
 1. [Restore the database from S3](#restoring-a-database-from-s3).
 1. Reset the login and user mappings in Sql Server Studio on the new server for the restored database.
