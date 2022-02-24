@@ -751,25 +751,27 @@ this step won't be needed.<br>
     1. Connect to S3 on the current server.
     1. Select the bucket and folder to upload to 
     <!--sqlserver-rds-bucket -> FromDarby folder -->
-    1. Click the Upload button, click "Add files" and select the .bak backup file. Click Upload.
-1. Open SQL Management Studio to connect to RDS from the new server.
+    1. Click the Upload button, click "Add files" and select the .bak backup file. Click Upload.  
+
+1. Open SQL Server Management Studio to connect to RDS from the new server.
 1. Delete the current database on the new server if it exists.
 If database "in use" prevents Delete, Try running this SQL:  
+(Try without Single_User line. That line returns an error, the rest works.)
 USE master;  
 ALTER DATABASE Atlanta SET SINGLE_USER WITH ROLLBACK IMMEDIATE;  
 DROP DATABASE Atlanta;  
-Refresh, database should now be gone.  (Try without Single_User line. Returned an error, but worked.)
+Refresh, database should now be gone.  
 
 1. [Restore the database from S3](#restoring-a-database-from-s3).
 1. Reset the login and user mappings in Sql Server Studio on the new server for the restored database.
     1. Select the restored database.
-    1. Open the Security > Users node and then delete the user that is used to connect to the database in Web.config. Do the same for the Lookup database if it was restored.
+    1. Open the Security > Users node and then delete the user that is used to connect to the database in Web.config. <!-- Starts with name of database --> Do the same for the Lookup database if it was restored.
     1. Open the Security node that applies to all databases.
         1. Open the Logins node.
         1. If the user login does not appear, refresh the Logins list. The login may need to be added if it does not exist. If the login needs to be added, choose Sql Server Authentication and enter the username and password so that it corresponds to the values in Web.config.
         1. Right click the user login and choose Properties. 
         1. In the "User Mappings" section, assign the user login to the restored database.
-            1. Check db_datareader, db_datawriter and [database name]SP. Leave "public" checked. Check ExecStoredProc if present.
+            1. Check db\_datareader, db\_datawriter<!-- wasn't checked for Lookup when setting for Atlanta --> and [database name]SP. <!-- Could be SystemSP for Atlanta db -->Leave "public" checked. Check ExecStoredProc if present. <!-- not present for Atlanta -->
         1. Click OK to save the User Mappings. If you see an error, such as for the Lookup database, be sure to delete the corresponding user in the Lookup database and try again.
 
 
