@@ -1,3 +1,37 @@
+## Updates
+
+#### Deployment Updates
+
+2021 - Setup notes for AWS hosting using EC2 virtual machine and RDS SQL database.  
+2020 - Streamlining server migration.  
+2019 - Updates for deployment from Github. 
+
+#### Cloudflare HTTPS Certs
+
+2018 - Switch to free CloudFlare certs for https security.
+
+#### Email Summary Updates
+
+2017 - Email summaries of exceptions are now sent to admins once every 30 minutes containing the remote IPs and the counts per IP address.  Added to adjust for bursts of emails during high traffic.  
+
+For PageName, we've added the highlighted line. If the script_name ends with a trailing slash, as in “/events/”, we return an empty string rather than “events”.  
+
+For IContains, we now check for an empty string as well as null. If the string had been empty, IContains would have returned 0 as the index, and therefore true, rather than false as would be expected.  
+
+
+#### Custom Page URLs
+
+2016 - Added support for custom page URLs for improved search indexing and short URLs.  
+
+#### Static Page Generation Updates
+
+2015 - Pages generated from multiple queries are now stored in static folders for fast loading.  
+
+<!--
+    Fork the Core repo, copy in recent changes from NAAEE version. Changes are primarily removal of remaining IsSite settings. These can be replaced with database settings in the "site" table.
+-->
+<br>
+
 #Steps for Configuring and Hosting on AWS
 
 <a name="server"></a>
@@ -1009,41 +1043,6 @@ the second "Replace permission entries on all child objects..."
 To make a backup, switch from using static IP addresses back to using DHCP, create a snapshot, then re-add the secondary IP addresses after making the backup.  As a result, your websites will be down about 10-15 minutes while you are taking the snapshot.  
 
 If you don't switch to static IPs, your install from the snapshot will return a 1/2 complete error.  
-
-
-## Updates
-
-#### Deployment Updates
-
-2021 - Setup notes for AWS hosting uwing EC2 virtual machine and RDS SQL database.  
-2020 - Streamlining server migration.  
-2019 - Updates for deployment from Github. 
-
-#### Cloudflare HTTPS Certs
-
-2018 - Switch to free CloudFlare certs for https security.
-
-#### Email Summary Updates
-
-2017 - Email summaries of exceptions are now sent to admins once every 30 minutes containing the remote IPs and the counts per IP address.  Added to adjust for bursts of emails during high traffic.  
-
-For PageName, we've added the highlighted line. If the script_name ends with a trailing slash, as in “/events/”, we return an empty string rather than “events”.  
-
-For IContains, we now check for an empty string as well as null. If the string had been empty, IContains would have returned 0 as the index, and therefore true, rather than false as would be expected.  
-
-
-#### Custom Page URLs
-
-2016 - Added support for custom page URLs for improved search indexing and short URLs.  
-
-#### Static Page Generation Updates
-
-2015 - Pages generated from multiple queries are now stored in static folders for fast loading.  
-
-<!--
-    Fork the Core repo, copy in recent changes from NAAEE version. Changes are primarily removal of remaining IsSite settings. These can be replaced with database settings in the "site" table.
--->
-<br>
 
 
 
