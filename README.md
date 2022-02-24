@@ -755,13 +755,15 @@ this step won't be needed.<br>
 
 1. Open SQL Server Management Studio to connect to RDS from the new server.
 1. Delete the current database on the new server if it exists.
+In SSMS when you right click on a database, the dialog has a checkbox that you can check to close all of the connections to the database before deleting the database.
+<!-- So not needed:
 If database "in use" prevents Delete, Try running this SQL:  
 (Try without Single_User line. That line returns an error, the rest works.)
 USE master;  
 ALTER DATABASE Atlanta SET SINGLE_USER WITH ROLLBACK IMMEDIATE;  
 DROP DATABASE Atlanta;  
 Refresh, database should now be gone.  
-
+-->
 1. [Restore the database from S3](#restoring-a-database-from-s3).
 1. Reset the login and user mappings in Sql Server Studio on the new server for the restored database.
     1. Select the restored database.
