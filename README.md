@@ -424,7 +424,10 @@ Click "New Certificate" and register yourself as a new contact.
 You'll be prompted to enter an email address.  
 Didn't choose "Use Staging (test) Mode"  
 
-Associate a domain to an IP in IIS. You can use the same IP with multiple IIS sites.  
+Note: Assigning an IP does not seem necessary. All IPs can be omitted in IIS.
+To remove: Associate a domain to an IP in IIS. You can use the same IP with multiple IIS sites.  
+To replace with: Don't add an IP address. This will give you flexibility if moving the IIS setting to another machine.
+
 Note that the generated cert will have no IP in IIS.  
 
 In IIS, use only domain names.  No IPs.  
@@ -1048,6 +1051,9 @@ To make a backup, switch from using static IP addresses back to using DHCP, crea
 
 If you don't switch to static IPs, your install from the snapshot will return a 1/2 complete error.  
 
+## NeatUpload
+
+Clone the NeatUpload folder into the site root.  
 
 
 
