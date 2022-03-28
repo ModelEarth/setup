@@ -27,12 +27,22 @@ For IContains, we now check for an empty string as well as null. If the string h
 
 2015 - Pages generated from multiple queries are now stored in static folders for fast loading.  
 
+## To Do
+
+Move footer text from Core/MasterPage to a site application value.  
+
 <!--
     Fork the Core repo, copy in recent changes from NAAEE version. Changes are primarily removal of remaining IsSite settings. These can be replaced with database settings in the "site" table.
 -->
 <br>
 
-#Steps for Configuring and Hosting on AWS
+# Validation Tools
+
+To validate [accessibility](https://wave.webaim.org/report#/), css, html and links, we recommend the [Web Developer extension](https://chrome.google.com/webstore/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm) by chrispederick.com. It will add a cog icon in the upper right for testing page HTML.
+
+
+
+# Steps for Configuring and Hosting on AWS
 
 <a name="server"></a>
 
@@ -438,8 +448,7 @@ The IIS entries can be all https. Avoid using http in IIS.
 bindings for different sites that are also unchecked with the same certificate as the site being updated. IIS will display a warning if that situation occurs:
 <i>"At least one other site is using the same HTTPS binding and the binding is configured with a different certificate. Are you sure that you want to reuse this HTTPS
 binding and reassign the other site or sites to use the new certificate?"</i>
-In some cases, that may be desirable so that you don't have to select the certificate for each site's bindings. For other cases, it may end up updating a binding
-with the wrong certificate.</p>
+In some cases, that may be desirable so that you don't have to select the certificate for each site's bindings. For other cases, it may end up updating a binding with the wrong certificate. (CloudFlare hides the cert, so no impact unless the site is not using Cloudflare.)</p>
 
 "Not Found" occurs initially when https match is not present for a domain in IIS.  
 To solve, add an https 433 binding in IIS matching the domain.  
