@@ -29,16 +29,13 @@ For IContains, we now check for an empty string as well as null. If the string h
 
 ## To Do
 
-Move footer text from Core/MasterPage to a site application value.  
+Move copy of Core/MasterPage to Go for header and footer update.  
 
 <!--
     Fork the Core repo, copy in recent changes from NAAEE version. Changes are primarily removal of remaining IsSite settings. These can be replaced with database settings in the "site" table.
 -->
 <br>
 
-# Validation Tools
-
-To validate [accessibility](https://wave.webaim.org/report#/), css, html and links, we recommend the [Web Developer extension](https://chrome.google.com/webstore/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm) by chrispederick.com. It will add a cog icon in the upper right for testing page HTML.
 
 
 
@@ -1065,6 +1062,8 @@ If you don't switch to static IPs, your install from the snapshot will return a 
 Clone the NeatUpload folder into the site root.  
 
 
+## Validation Tools
 
+To validate [accessibility](https://wave.webaim.org/report#/), css, html and links, we recommend the [Web Developer extension](https://chrome.google.com/webstore/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm) by chrispederick.com. The Web Developer extension can be activated as a settings icon in the upper right for testing page HTML.
 
 
