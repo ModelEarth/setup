@@ -4,7 +4,7 @@
 
 **Partner Admin Tools** - Processes developed with Georgia State Parks, Georgia Tourism, Georgia Allies, Hands On Atlanta, Turner Broadcasting, Glenwood Park, the Grant Park Neighborhood Association and the Walker Foundation.
 
-**Environmental Impact Add-Ons** - Add-Ons for teaching about environmental impacts are documented at [model.earth](https://model.earth). Environmental Education features developed in partnership with [NAAEE](https://naaee.org) and the [Southeast Enviromental Education Alliance](http://www.southeastee.com/) for states including [Georgia](http://eeingeorgia.org/core/news/list.aspx), [North Carolina](http://web.eenorthcarolina.org/core/event/calendar.aspx), [Wisconsin](http://EEinWisconsin.org), and [Hawaii](http://heea.org/core/news/list.aspx).  
+**Environmental Impact Add-Ons** - Add-Ons for teaching about environmental impacts are documented at [model.earth](https://model.earth). Environmental Education features developed in partnership with [NAAEE](https://naaee.org), the [Southeast Enviromental Education Alliance](http://www.southeastee.com/), and ten states including [Georgia](http://eeingeorgia.org/core/news/list.aspx),&nbsp;[North&nbsp;Carolina](http://web.eenorthcarolina.org/core/event/calendar.aspx), [Wisconsin](http://EEinWisconsin.org), and [Hawaii](http://heea.org/core/news/list.aspx).  
 
 **Integrated Map Data** - Farm Fresh Produce, B2B Recycling, Department of Labor job statistics and Electric Vehicle Parts Manufacturers. 
 
