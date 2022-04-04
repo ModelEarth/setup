@@ -1,5 +1,9 @@
 ## Updates
 
+#### Environmental Tools
+
+2022 - State Recycling Partner Directories  
+
 #### Deployment Updates
 
 2021 - Setup notes for AWS hosting using EC2 virtual machine and RDS SQL database.  
