@@ -9,4 +9,4 @@
 **Integrated Map Data** - Farm Fresh Produce, B2B Recycling, Department of Labor job statistics and Electric Vehicle Parts Manufacturers. 
 
 **Core Setup Steps** - Includes configuration for AWS, IIS, .NET, SQL, Certs and Email.  
-[Contact Us for Assistance](/inspire/contact/)  
+[Contact the ComponentCore team for Assistance](https://componentcore.com/inspire/contact/)  
