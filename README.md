@@ -794,26 +794,25 @@ Reference: [Restoring a database](https://docs.aws.amazon.com/AmazonRDS/latest/U
 
 **An existing database must be deleted first before restoring, otherwise the restore will fail. There is no overwrite option.**
 
-Syntax:
+Sample syntax, run as SQL.  
+(simply grab the path from the AWS website S3 detail page):
 
-    use master
-    go
-    exec msdb.dbo.rds_restore_database
-        @restore_db_name='database_name',
-        @s3_arn_to_restore_from='arn:aws:s3:::bucket_name/file_name.extension',
-        @with_norecovery=0|1,
-        [@kms_master_key_arn='arn:aws:kms:region:account-id:key/key-id'],
-        [@type='DIFFERENTIAL|FULL'];
-
-Example, run as SQL. You can avoid including with_norecovery, region, etc.
+Change "Lookup" to the name of your database instance.  
+(You can avoid including with_norecovery, region, etc.)  
 
     use master
     go
     exec msdb.dbo.rds_restore_database    
     @restore_db_name='Lookup', 
-    @s3_arn_to_restore_from='arn:aws:s3:::[bucket_name]/[folder_name]/Lookup.bak';
+    @s3_arn_to_restore_from='arn:aws:s3:::[bucket_name]/[folder_name]/Lookup_backup_2022_04_03_200000_8000000.bak';
 
 Allow about 40 seconds, then hit refresh on "Databases" to see the restored database.  
+
+You can track the status using a query:
+
+    use master
+    go
+    exec msdb.dbo.rds_task_status @db_name='Lookup';
 
 ### Tracking the status of tasks
 
