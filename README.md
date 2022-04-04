@@ -999,14 +999,14 @@ Setup email to allow website to send emails.<br>
     1. Select the Properties menu item.
     1. Click the Delivery tab
     1. Click the Advanced button.
-    1. Enter the server name in the "Fully-qualified domain name" field. If using AWS, do not use the generic domain given by AWS for the web server. Since it is generic and just has an ip address in it as an identifier, receiving email servers will reject it. Instead, create a DNS A record such as myserver.dreamstudio.com that points to the web server.
+    1. Enter the server name in the "Fully-qualified domain name" field. If using AWS, do not use the generic domain given by AWS for the web server. Since it is generic and just has an ip address in it as an identifier, receiving email servers will reject it. Instead, create a DNS A record such as myserver.yourdomain.com that points to the web server.
     1. Save the settings.
 1. Ensure that a Reverse DNS (PTR) record is created to point back to the server domain. If using AWS, refer to the next step for more details.
-1. AWS blocks the SMTP port 25 by default, so complete the [Request to remove email sending limitations](https://console.aws.amazon.com/support/contacts?#/rdns-limits) form to get AWS to remove the block. Ask AWS to remove the port block and also update the Reverse DNS PTR record so that the domain matches the SMTP server name, i.e. myserver.dreamstudio.com.  
+1. AWS blocks the SMTP port 25 by default, so complete the [Request to remove email sending limitations](https://console.aws.amazon.com/support/contacts?#/rdns-limits) form to get AWS to remove the block. Ask AWS to remove the port block and also update the Reverse DNS PTR record so that the domain matches the SMTP server name, i.e. myserver.yourdomain.com.  
 
 ### Setup TLS for secure email transmission
 
-1. Create a certificate using CertifyTheWeb or some other tool. Set the domain name to match the SMTP server name, i.e. myserver.dreamstudio.com. Deploy the certificate to the certificate store only. Try to use DNS authorization so that a website won't have to be set up for the server domain.
+1. Create a certificate using CertifyTheWeb or some other tool. Set the domain name to match the SMTP server name, i.e. myserver.yourdomain.com. Deploy the certificate to the certificate store only. Try to use DNS authorization so that a website won't have to be set up for the server domain.
 1. Restart the server or IIS or the SMTP service.
 1. Open IIS 6.
 1. Expand the server node.
