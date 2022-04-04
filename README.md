@@ -757,10 +757,10 @@ this step won't be needed.<br>
 
 1. Backup the database on the current server, or locate an existing .BAK file.
 1. Copy the backup to an S3 bucket.
-    1. Connect to S3 on the current server.
+    1. Connect to S3 on the current server using a web browser.
     1. Select the bucket and folder to upload to 
     <!--sqlserver-rds-bucket -> FromDarby folder -->
-    1. Click the Upload button, click "Add files" and select the .bak backup file. Click Upload.  
+    1. Click the Upload button, click "Add files" and select the .bak backup file. Click Upload.<br><br>    
 
 1. Open SQL Server Management Studio to connect to RDS from the new server.
 1. Delete the current database on the new server if it exists.
@@ -937,9 +937,24 @@ Each entity receives an ItemID.  Items include users, events, locations, organiz
 
 <a href="img/database/ItemDatabase.gif"><img src="img/database/ItemDatabase.gif" style="width:100%;max-width:828px"></a><br>
 
+## Move Files
+
+If you are transfering an instance of the ComponentCore Item database, you'll need to move the following folders:
+
+Feed  
+Files  
+Info  
+Removed  
+Source  
+
+Don't move the Site file. The content of the Site file is auto-generated.  
+
+If you are doing a second file move, you can filter by the date changed and only zip recently added files.   
+
+
 ## Add Web.Config file
 
-See notes in core-admin  
+See notes in core-admin or contact a system administrator. 
 
 
 <h2>Add MIME types</h2>
