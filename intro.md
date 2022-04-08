@@ -6,7 +6,7 @@
 
 **Resource Calendars** - Environmental Education partner tools developed with [NAAEE's](https://naaee.org) regional [Southeast Enviromental Education Alliance](http://www.southeastee.com/) for southeast states including [Georgia](http://eeingeorgia.org/core/news/list.aspx),&nbsp;[North&nbsp;Carolina](http://web.eenorthcarolina.org/core/event/calendar.aspx) and [Tennessee](hhttp://eeintennessee.org/), plus [Wisconsin](http://EEinWisconsin.org), and [Hawaii](http://heea.org/core/news/list.aspx).  
 
-**Environmental Impacts** -  Interactive EPA charts for teaching about environmental impacts using [Life Cycle Assessment tools](../io/charts/) are documented at [model.earth](https://model.earth). 
+**Environmental Impacts** -  Interactive EPA charts for teaching about environmental impacts using [Life Cycle Assessment tools](../io/charts/) documented and developed at [Model.Earth](https://model.earth). 
 
 **Integrated Map Data** - [Farm Fresh Produce](/localsite/map/#show=farmfresh), B2B Recycling, Department of Labor job statistics and Electric Vehicle Parts Manufacturers<!--/apps/ev/-->. 
 
