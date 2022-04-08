@@ -2,11 +2,11 @@
 
 #### Environmental Tools
 
-2022 - State Recycling Partner Directories  
+2022 - State recycling directories, EPA input-output widgets, zip code industry lists  
 
 #### Deployment Updates
 
-2021 - Setup notes for AWS hosting using EC2 virtual machine and RDS SQL database.  
+2021 - Setup for AWS hosting using EC2 virtual machine and RDS SQL data.  
 2020 - Streamlining server migration.  
 2019 - Updates for deployment from Github. 
 
