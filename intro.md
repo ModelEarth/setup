@@ -11,4 +11,4 @@
 **Integrated Map Data** - [Farm Fresh Produce](/localsite/map/#show=farmfresh), B2B Recycling, Department of Labor job statistics and Electric Vehicle Parts Manufacturers<!--/apps/ev/-->. 
 
 **Core Setup Steps** - Includes configuration for AWS, IIS, .NET, SQL, Certs and Email.  
-[Contact Don Adams for Assistance](https://componentcore.com/inspire/contact/)  
+[Contact Don Adams for assistance](https://componentcore.com/inspire/contact/)  
