@@ -31,6 +31,9 @@ For IContains, we now check for an empty string as well as null. If the string h
 
 2015 - Pages generated from multiple queries are now stored in static folders for fast loading.  
 
+Also see: [EE Additions](https://componentcore.com/ee/additions)  
+
+
 ## To Do
 
 Move copy of Core/MasterPage to Go for header and footer update.  
