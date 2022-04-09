@@ -1007,6 +1007,35 @@ Setup email to allow website to send emails.<br>
 1. Ensure that a Reverse DNS (PTR) record is created to point back to the server domain. If using AWS, refer to the next step for more details.
 1. AWS blocks the SMTP port 25 by default, so complete the [Request to remove email sending limitations](https://console.aws.amazon.com/support/contacts?#/rdns-limits) form to get AWS to remove the block. Ask AWS to remove the port block and also update the Reverse DNS PTR record so that the domain matches the SMTP server name, i.e. myserver.yourdomain.com.  
 
+### Setup TLS
+
+TLS 1.0 and TLS 1.1 should be disabled on the server since they are not secure. As of April 2022, the server (Windows Server 2019 Datacenter) uses TLS 1.2 for making https requests such as for static page generation and credit card authorizations. Eventually, TLS 1.3 will become the standard and a software download and recommended registry keys should be available to install it on the server. Newer servers should, by default, support the latest version of TLS.
+
+#### Registry Updates for SSL/TLS
+The following registry files can be used to disable TLS 1.0, TLS 1.1, and SSL. The TLS file also enables TLS 1.2 which may already be enabled. Be sure to make a backup of the SCHANNEL\Protocols tree before making any updates. To load these files, either right-click on the file and select Open with -> Registry Editor, or search for Registry Editor in the Windows search box and then use File -> Import. These registry files are currently located in the Tools\EnableDisableSSLRegistry folder.
+
+<ul>
+<li>DisableSSL2&3.reg</li>
+<li>EnableTLS1.2_DisableOlderTLS.reg</li>
+</ul>
+
+#### Using TLS in the Server code
+
+The Global.asax file in each website is used to configure the TLS version that is used. Microsoft recommends that the TLS version not be hardcoded which will allow the operating system to determine which version to use including newer versions that may be installed. This may be valid for newer servers such as Windows Server 2019 and beyond, but perhaps not for Windows Server 2008 and older.
+
+In the Application_Start function, add the following code:
+
+        // Set TLS 1.2 as the default HTTPS Protocol. The other TLS protocols are not secure anymore.
+        // http://stackoverflow.com/questions/28286086/default-securityprotocol-in-net-4-5
+        // Ensure TLS 1.2 is enabled in the registry. Older protocols should be disabled. 
+        System.Net.ServicePointManager.SecurityProtocol = (System.Net.SecurityProtocolType)3072;
+
+This statement should also be added to any utilities that make HTTPS requests, such as static page generation, before the requests are made. Note that perhaps these statements are not needed anymore in the code. An easy test could be made by removing it from the static generation program and seeing if it can generate a static file or not. If you see the following error: The request was aborted: Could not create SSL/TLS secure channel", then you know that it still must be included. Be sure that the minimum TLS version for domains hosted on CloudFlare is 1.2 (as of April 2022).
+
+References: 
+[Default SecurityProtocol in .NET 4.5](https://stackoverflow.com/questions/28286086/default-securityprotocol-in-net-4-5)
+[Transport Layer Security (TLS) best practices with the .NET Framework](https://docs.microsoft.com/en-us/dotnet/framework/network-programming/tls) 
+
 ### Setup TLS for secure email transmission
 
 1. Create a certificate using CertifyTheWeb or some other tool. Set the domain name to match the SMTP server name, i.e. myserver.yourdomain.com. Deploy the certificate to the certificate store only. Try to use DNS authorization so that a website won't have to be set up for the server domain.
@@ -1049,6 +1078,7 @@ Apply the following permission change to the following folders:<br>
     <li>Source - Larger original versions</li>
     <li>Removed - Source images stored for resizing, but expendable if storage reaches max.</li>
     <li>Page</li>
+    <li>Site</li>
 </ul>
 
 <!--
