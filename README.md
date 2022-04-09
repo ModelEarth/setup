@@ -33,17 +33,7 @@ For IContains, we now check for an empty string as well as null. If the string h
 
 Also see: [EE Additions](https://componentcore.com/ee/additions) (account required)  
 
-
-## To Do
-
-Move copy of Core/MasterPage to Go for header and footer update.  
-
-<!--
-    Fork the Core repo, copy in recent changes from NAAEE version. Changes are primarily removal of remaining IsSite settings. These can be replaced with database settings in the "site" table.
--->
 <br>
-
-
 
 
 # Steps for Configuring and Hosting on AWS
