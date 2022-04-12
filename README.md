@@ -59,7 +59,9 @@ Simple Notifications
 https://console.aws.amazon.com/sns/v3/home?region=us-east-1#/subscriptions
 -->
 
-[To save over $150 per month, migrate EC2 to the Reserved Model](https://danielmiessler.com/blog/saved-ec2-bill-5-minutes-switching-reserved-instance/) - A one-year reserved plan for the EC2 portion is $374 ($34/month). "The way to get to Reserved billing is counterintuitive. Basically, you have to pretend that you’re buying a new instance, of the Reserved type, with the exact same attributes of the one you want to convert. Upon making the purchase you will have converted the other one... So what then happens is that Amazon finds your running On Demand instance and converts it to a Reserved instance. And now if you go into billing you should see that reflected." We chose "Only show offerings that reserve capacity" and used the Availability Zone listed under the networking tab. [View settings](img/steps/reserved-instance.png). Do the same for RDS.
+[To save over $150 per month, migrate EC2 to the Reserved Model](https://danielmiessler.com/blog/saved-ec2-bill-5-minutes-switching-reserved-instance/) - A one-year reserved plan for the EC2 portion is $374 ($34/month). "The way to get to Reserved billing is counterintuitive. Basically, you have to pretend that you’re buying a new instance, of the Reserved type, with the exact same attributes of the one you want to convert. Upon making the purchase you will have converted the other one... So what then happens is that Amazon finds your running On Demand instance and converts it to a Reserved instance. And now if you go into billing you should see that reflected." We chose "Only show offerings that reserve capacity" and used the Availability Zone listed under the networking tab. [View settings](img/steps/reserved-instance.png).  
+
+The RDS SQL database is $47.22 per month, based on a 3-year prepay of $1,700.  
 
 
 ### Get the Public IP
