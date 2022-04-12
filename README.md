@@ -31,7 +31,7 @@ For IContains, we now check for an empty string as well as null. If the string h
 
 2015 - Pages generated from multiple queries are now stored in static folders for fast loading.  
 
-Also see: [EE Additions](https://componentcore.com/ee/additions) (account required)  
+Also see: [EE Additions](https://componentcore.com/ee/additions) (developer account required)  
 
 <br>
 
@@ -926,12 +926,6 @@ Instead, run the following script:
 
     EXEC msdb.dbo.sp_delete_job @job_name = 'job_name';
 
-
-## Core Data Schema  
-
-Each entity receives an ItemID.  Items include users, events, locations, organizations, group lists.  
-
-<a href="img/database/ItemDatabase.gif"><img src="img/database/ItemDatabase.gif" style="width:100%;max-width:828px"></a><br>
 
 ## Move Files
 
