@@ -1062,6 +1062,7 @@ The following tools can be helpful in looking at DNS and Reverse DNS records and
 <h2>Directory Permission Setting</h2>
 Apply the following permission change to the following folders:<br>
 <ul>
+    <li>app_data</li>
     <li>Files</li>
     <li>Source - Larger original versions</li>
     <li>Removed - Source images stored for resizing, but expendable if storage reaches max.</li>
@@ -1088,6 +1089,25 @@ Click Add to enter the Network Service username if not already present.
 
 Give it Full Control. Click Advanced. Keep the first box checked and also check
 the second "Replace permission entries on all child objects..."  
+
+## Device detection using 51Degrees.mobi
+
+We are using the 51Degrees mobile device detection for some pages to control the rendered output. The version we are currently using is 3.2.22.2.
+
+To upgrade or install:
+
+1. Make a copy of the current FiftyOne.Foundation.dll in the build\dlls folder.
+1. Upload the latest release version of the FiftyOne.Foundation.dll, in the Detector Web Site\bin folder in the release zip file, to the build\dlls folder.
+
+1. For each review or live folder:
+    1. Copy the local data file, 51Degrees-LiteV3.2.dat, in the zip file's data folder, to each website's app_data folder (live and review).
+    1. Build and Deploy to a review or live folder, or copy the FiftyOne.Foundation.dll from the build\dlls folder to the website's bin folder.
+    1. Rename 51Degrees.mobi.config to 51Degrees.mobi.config.old if it exists in the web root, i.e. D:\Live\Georgia, folder.
+    1. Copy the local 51Degrees.config from the latest release version, in the Detector Web Site folder, to the corresponding web root, i.e. D:\Live\Georgia, folder.
+    1. Ensure that the Network Service account has full privileges for the app_data folder (this folder only).
+    1. Restart the site.
+    1. Verify that the new data file is being loaded: http://[domain]/core/site/variables.aspx
+
 
 
 ## Create a Backup Snapshot
