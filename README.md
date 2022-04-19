@@ -12,7 +12,7 @@
 
 #### Cloudflare HTTPS Certs
 
-2018 - Switch to free CloudFlare certs for https security.
+2018 - Switch to free CloudFlare CDN proxies with free LetsEncrypt certs for https security.
 
 #### Email Summary Updates
 
@@ -1109,6 +1109,9 @@ To upgrade or install:
     1. Verify that the new data file is being loaded: http://[domain]/core/site/variables.aspx
 
 
+## NeatUpload
+
+Clone the NeatUpload folder into the site root.  
 
 ## Create a Backup Snapshot
 
@@ -1116,9 +1119,10 @@ To make a backup, switch from using static IP addresses back to using DHCP, crea
 
 If you don't switch to static IPs, your install from the snapshot will return a 1/2 complete error.  
 
-## NeatUpload
 
-Clone the NeatUpload folder into the site root.  
+## To Reboot
+
+[Use the AWS Console](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-reboot.html) - better than rebooting from the machine.  
 
 
 ## Validation Tools
