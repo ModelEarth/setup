@@ -72,6 +72,18 @@ Open the Remote Server Administration Tools -> Feature Administration Tools
 
 Check the SMTP Server option and accept recommended dependent features be installed.
 
+## HTTP Logging
+
+Optionally activate daily logging per site to the D:\IISLogs folder.
+
+Install the following:
+HTTP Logging  
+Logging Tools  
+Request Monitor  
+
+Delee periodically so files don't fill server storage.  
+
+
 ## Transferring IIS Settings From One Server to Another
 
 In order to transfer settings from one IIS server to another, do the following:
