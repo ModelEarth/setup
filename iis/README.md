@@ -1,4 +1,4 @@
-[Server Setup](../)
+[Setup](../)
 # Install IIS
 
 From Control Panel, under Programs, click on Turn Windows Features on or off.  
