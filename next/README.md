@@ -54,6 +54,11 @@ Allowing external users to securely and directly upload files to Amazon S3 [Deta
 [Viewing Photos in an Amazon S3 Bucket from a Browser](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/s3-example-photos-view.html)
 
 
+## AWS Toolkit for JetBrains
+
+[User Guide for Webstrom with AWS services](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/key-tasks.html#key-tasks-first-connect)  
+
+
 <!--
 ## nextjs
 
