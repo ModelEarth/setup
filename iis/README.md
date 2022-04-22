@@ -24,7 +24,10 @@ The following options should be checked except where noted.
 
 - Under Health and Diagnostics
 
-    HTTP Logging (not needed, uncheck)
+    HTTP Logging 
+    Logging Tools  
+    ODBC Logging (checked by default)
+    Request Monitor  
 
 - Under Performance
 
@@ -74,14 +77,11 @@ Check the SMTP Server option and accept recommended dependent features be instal
 
 ## HTTP Logging
 
-Optionally activate daily logging per site to the D:\IISLogs folder.
+In IIS, optionally activate daily logging per site to the D:\IISLogs folder.
 
-Install the following:
-HTTP Logging  
-Logging Tools  
-Request Monitor  
+Use the default W3C format and click Select Fields... to specify the fields to include in the log files.
 
-Delee periodically so files don't fill server storage.  
+Delete periodically or disable after a period of time so that the log files don't fill up the server storage.  
 
 
 ## Transferring IIS Settings From One Server to Another
