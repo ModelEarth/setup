@@ -45,7 +45,7 @@ Amplyfy CLI Setup - Go to the AWS RDS console and click "Create database".
 [Event Handlers for Browser Uploads](https://docs.amplify.aws/lib/storage/upload/q/platform/js/#event-handlers)
 
 
-Allowing external users to securely and directly upload files to Amazon S3 [Details](https://aws.amazon.com/blogs/storage/allowing-external-users-to-securely-and-directly-upload-files-to-amazon-s3/)
+[Allowing external users to securely and directly upload files to Amazon S3](https://aws.amazon.com/blogs/storage/allowing-external-users-to-securely-and-directly-upload-files-to-amazon-s3/)
 
 
 [StackOverflow example of securely uploading from Next JS to Amazon S3](https://stackoverflow.com/questions/63525876/how-to-securely-upload-images-to-amazon-s3-from-a-next-js-application)
