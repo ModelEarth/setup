@@ -56,7 +56,7 @@ Amplyfy CLI Setup - Go to the AWS RDS console and click "Create database".
 
 ## AWS Toolkit for JetBrains
 
-[User Guide for Webstrom with AWS services](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/key-tasks.html#key-tasks-first-connect)  
+[User Guide for Webstrom with AWS services](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/key-tasks.html#key-tasks-first-connect) - [And on Github](https://github.com/aws/aws-toolkit-jetbrains)  
 
 
 <!--

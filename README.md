@@ -1109,6 +1109,62 @@ To upgrade or install:
     1. Verify that the new data file is being loaded: http://[domain]/core/site/variables.aspx
 
 
+## GitHub
+
+Check if you are logged in to git, if not add your account Name and private [GitHub noreply email](https://github.com/settings/emails) (it's in the paragraph in the Primary email address section).
+
+    git config -l
+
+    git config --global user.name "[Your Github account username]"
+
+    git config --global user.email [ID]+[username]@users.noreply.github.com
+
+
+## TortoiseGit
+
+TortoiseGit is used for the build process on Windows.
+
+Right click a folder and choose TortoiseGit > Settings > Git
+
+On the Git nav item, select Global, to edit the name and email.  Use the noreply email for privacy.  
+
+You may need to run this once initially:  
+
+    git config --global --add safe.directory *
+
+You'll see the following if you right click on a TortoiseGit folder -> Settings -> Git -> Edit global .gitconfig [safe]
+
+    directory = *
+
+<!--
+Might also need credential and lfs, pasted these from D.A.
+
+[user]
+
+                name = [your account]
+
+                email = [your noreply email from GitHub.com site]
+
+[credential]
+
+                helper = manager-core
+
+[filter "lfs"]
+
+                clean = git-lfs clean -- %f
+
+                smudge = git-lfs smudge -- %f
+
+                process = git-lfs filter-process
+
+                required = true
+
+[safe]
+
+                directory = *
+
+-->
+
 ## NeatUpload
 
 Clone the NeatUpload folder into the site root.  
