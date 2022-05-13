@@ -1118,21 +1118,22 @@ Type D: to change drive, then cd to change directory. Replace core-site with you
     build  
     deploy \review\core-sites
 
-Use the following to pull a repo you've already cloned. You may need to be logged in as Administrator to avoid permission limitations imposed by Windows.  You can also use the following to pull one file or subfolder.
+Use the following to pull a repo you've already cloned. You can also use the following to pull one file or subfolder.
 
     update \review\core-sites\localsite
+
+Running the update batch file is easy, but you do have to type in the path. If you have multiple repos to pull, you can use the command history (up/down arrow) and then edit previous commands without having to type from scratch every time. This is handy for deploying to review and then live.
 
 
 ## TortoiseGit
 
 In addition to the deploy and update commands above, you can pull from Github using the following (but only if you are logged in as an Administrator due to permission restrictions): 
 
-
 TortoiseGit is used for the build process on Windows.
 
 Right click a folder and choose TortoiseGit > Settings > Git
 
-On the Git nav item, select Global, to edit the name and email.  Use the noreply email for privacy.  It's in the paragraph in GitHub's [Primary email address section](https://github.com/settings/emails).
+On the Git nav item, select Global, to edit the name and email.  Use the noreply email for privacy.  You'll find it in the "[Primary email address](https://github.com/settings/emails)" paragraph in GitHub.
 
 If you get an error, you may need to run this once initially:  
 
@@ -1171,9 +1172,11 @@ Might also need credential and lfs, pasted these from D.A.
 
 -->
 
-You may need to log on as Administor to Pull into folders due to folder update permission restrictions.
+You may need to log on as Administor to Pull into folders due to Windows permission restrictions. You'll get the error: Cannot open '.git/FETCH_HEAD': Permission denied. To resolve, add full access permissions for the user on the Review and Live folders ([Stackoverflow](https://stackoverflow.com/questions/251109/tortoisesvn-and-windows-server-2008-user-account-control)). Being a member of the Administrators group is not enough.
 
-How to check if you are logged in to git, and optionally change your account and email:
+### Check and change GitHub accounts
+
+Check if you are logged in to git, and optionally change your account and email:
 
 
     git config -l
