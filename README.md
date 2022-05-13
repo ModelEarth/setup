@@ -1109,26 +1109,32 @@ To upgrade or install:
     1. Verify that the new data file is being loaded: http://[domain]/core/site/variables.aspx
 
 
-## GitHub
+## Build and Deploy
 
-Check if you are logged in to git, if not add your account Name and private [GitHub noreply email](https://github.com/settings/emails) (it's in the paragraph in the Primary email address section).
+Type D: to change drive, then cd to change directory. Replace core-site with your sites folder name.
 
-    git config -l
+    D:
+    cd \core-deploy  
+    build  
+    deploy \review\core-sites
 
-    git config --global user.name "[Your Github account username]"
+Use the following to pull a repo you've already cloned. You may need to be logged in as Administrator to avoid permission limitations imposed by Windows.  You can also use the following to pull one file or subfolder.
 
-    git config --global user.email [ID]+[username]@users.noreply.github.com
+    update \review\core-sites\localsite
 
 
 ## TortoiseGit
+
+In addition to the deploy and update commands above, you can pull from Github using the following (but only if you are logged in as an Administrator due to permission restrictions): 
+
 
 TortoiseGit is used for the build process on Windows.
 
 Right click a folder and choose TortoiseGit > Settings > Git
 
-On the Git nav item, select Global, to edit the name and email.  Use the noreply email for privacy.  
+On the Git nav item, select Global, to edit the name and email.  Use the noreply email for privacy.  It's in the paragraph in GitHub's [Primary email address section](https://github.com/settings/emails).
 
-You may need to run this once initially:  
+If you get an error, you may need to run this once initially:  
 
     git config --global --add safe.directory *
 
@@ -1165,9 +1171,23 @@ Might also need credential and lfs, pasted these from D.A.
 
 -->
 
+You may need to log on as Administor to Pull into folders due to folder update permission restrictions.
+
+How to check if you are logged in to git, and optionally change your account and email:
+
+
+    git config -l
+
+    git config --global user.name "[Your Github account username]"
+
+    git config --global user.email [ID]+[username]@users.noreply.github.com
+
+
+
 ## NeatUpload
 
-Clone the NeatUpload folder into the site root.  
+Clone the [NeatUpload](https://github.com/joeaudette/neatupload) folder into the site root.
+<!-- private form also in modelearth-->  
 
 ## Create a Backup Snapshot
 
