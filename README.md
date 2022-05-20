@@ -141,7 +141,7 @@ Reference: [Expand the EBS root volume of your EC2 Windows instance](https://aws
 
 AWS Backup can be used to backup RDS, EC2, EBS (Elastic Block Storage - C drive: 50 GB, D drive: 75 GB), and other resources.
 
-We use a third party cloud backup service (CrashPlan.com) to backup EBS volumes (for storage of uploaded images), Documents & Settings and User folders.  
+We use a third party cloud backup service (CrashPlan.com) to backup portions of EBS volumes (for storage of uploaded images), Documents & Settings and User folders.  
 
 We also back EC2 monthly on AWS the last day of the month (which includes the EBS C and D drives), and use a 6-month retention period to purge older backups. Notifications can be setup to send emails when a scheduled backup fails. (See below.)
 
