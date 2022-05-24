@@ -953,6 +953,7 @@ If you are doing a second file move, you can filter by the date changed and only
 ## Add Web.Config file
 
 See notes in core-admin or contact a system administrator. 
+Update the MailReturnPath email address in web.config and in the ManagementSuiteMail config file.
 
 
 <h2>Add MIME types</h2>
