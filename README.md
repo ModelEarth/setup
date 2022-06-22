@@ -1,8 +1,10 @@
 ## Updates
 
-#### Environmental Tools
+#### Environmental Tools and Form Components
 
-2022 - State recycling directories, EPA input-output widgets, zip code industry lists  
+2022 - State recycling directories, EPA input-output widgets, zip code industry lists.  
+Update "Additional Dates" button in the event list editor control to remain in current page.  
+Allow for images rotation during upload based on camera metatag.  
 
 #### Deployment Updates
 
