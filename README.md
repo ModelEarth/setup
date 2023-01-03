@@ -2,12 +2,11 @@
 
 #### Environmental Tools and Form Components
 
-2022 - State recycling directories, EPA input-output widgets, zip code industry lists.  
-Update "Additional Dates" button in the event list editor control to remain in current page.  
-Allow for images rotation during upload based on camera metatag.  
+State recycling directories, EPA input-output widgets, zip code industry lists.  
 
 #### Deployment Updates
 
+2022 - Update content editing UI. Rotate images based n camera metatag. "Additional Dates" editing remains on event list page.
 2021 - Setup for AWS hosting using EC2 virtual machine and RDS SQL data.  
 2020 - Streamlining server migration.  
 2019 - Updates for deployment from Github. 
@@ -464,7 +463,7 @@ It's fine to leave multiple 443 entries in each IIS site.
 You can point additional domains at the IP using a proxy in Cloudflare.  
 With AWS EC2, the external IP differs from the IP on the machine.  
 
-CloudFlare reuses one cert for all domains pointed at the IIS site. [Cloudflare setup](https://neighborhood.org/localsite/start/cloudflare)  
+CloudFlare reuses one cert for all domains pointed at the IIS site. [Cloudflare setup](https://model.earth/localsite/start/cloudflare)  
 (So unchecked additional domains that were also in the IIS site.)
 
 "Certify the Web" icon will appear on desktop.  
