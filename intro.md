@@ -1,6 +1,6 @@
 [Inspire Exploration](/inspire/)
 # Location Resources and Event Calendars
-<a href="#server">Server Setup</a> | <a href="#database">Database Setup</a> | <a href="#email">Email Setup</a> | <a href="#api">Web API</a><br>
+<a href="#server">Server Setup</a> | <a href="#database">Database Setup</a> | <a href="#email">Email Setup</a> | <a href="next">NextJS</a> | <a href="#api">Web API</a><br>
 
 **Partner Admin Tools** - Processes developed with Georgia Environmental Protection (EPD), Georgia State Parks, the Georgia Department of Economic Development (GDEcD), the Walker Foundation, Hands On Atlanta, and the communities of Glenwood Park and Grant&nbsp;Park.
 

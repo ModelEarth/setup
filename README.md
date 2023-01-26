@@ -1218,4 +1218,8 @@ If you don't switch to static IPs, your install from the snapshot will return a 
 
 To validate [accessibility](https://wave.webaim.org/report#/), css, html and links, we recommend the [Web Developer extension](https://chrome.google.com/webstore/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm) by chrispederick.com. The Web Developer extension can be activated as a settings icon in the upper right for testing page HTML.
 
+<a name="api"></a>
 
+## Web API
+
+Access to the Web API is currently limited to partner site admins.
