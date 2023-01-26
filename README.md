@@ -67,10 +67,10 @@ Instead, use a medium-sized EC2 instance and create a medium-sized RDS instance 
 
 $47.22 - The RDS SQL database (based on a 3-year prepay of $1,700)  
 $24.86 - EC2 Virtual Cloud Windows Server - Web Traffic (based on a 3-year prepay of $895)  
-$65.00 - Average monthly AWS fees beyond prepays (Data transfers, offsite backups)  
-$9.99 - Crashplan offsite backup  
+$65.00 - Average monthly AWS fees beyond prepays (Web Traffic, Data transfers, Offsite Backup Transfer)  
+$9.99 - Crashplan Offsite Backup  
 _____
-$147.07 - Total AWS Monthly plus offsite backup
+$147.07 - Total AWS Monthly plus Offsite Backup
 
 ### Get the Public IP
 
