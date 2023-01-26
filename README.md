@@ -65,8 +65,12 @@ Instead, use a medium-sized EC2 instance and create a medium-sized RDS instance 
 
 [To save over $150 per month on your medium virtual server, migrate EC2 to the Reserved Model](https://danielmiessler.com/blog/saved-ec2-bill-5-minutes-switching-reserved-instance/) - A one-year reserved plan for the EC2 portion is $374 ($34/month). The way to get to Reserved Billing is counterintuitive. You have to pretend that you’re buying a new instance, of the "Reserved" type, with the exact same attributes as the one you want to convert. When you purchase, AWS finds your running On Demand instance and converts it to a Reserved instance. In billing you should see that reflected. We chose "Only show offerings that reserve capacity" and used the Availability Zone listed under the networking tab. [View settings](img/steps/reserved-instance.png).  
 
-The RDS SQL database is $47.22 per month, based on a 3-year prepay of $1,700.  
-
+$47.22 - The RDS SQL database (based on a 3-year prepay of $1,700)  
+$24.86 - EC2 Virtual Cloud Windows Server - Web Traffic (based on a 3-year prepay of $895)  
+$65.00 - Average monthly AWS fees beyond prepays (Data transfers, offsite backups)  
+$9.99 - Crashplan offsite backup  
+_____
+$147.07 - Total AWS Monthly plus offsite backup
 
 ### Get the Public IP
 
