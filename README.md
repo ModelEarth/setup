@@ -72,6 +72,8 @@ $9.99 - Crashplan Offsite Backup
 _____
 $147.07 - Total AWS Monthly plus Offsite Backup
 
+Note: When adding a year to RDS prepay, adjust to cover daily fee. (Was $0.41 per day in 2022)
+
 ### Get the Public IP
 
 In the EC2 list, slide to the right and get the IPv4 DNS.  
