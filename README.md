@@ -491,7 +491,17 @@ Another option is to use a domain that is not already using https at Cloudflare.
 
 For domains that don't use CloudFlare or are not proxied through CloudFlare, ensure the following:
 1. Requests using HTTP are redirected to HTTPS.
-1. Add the following content security policy response headers for the Live and Review sites. Coordinate with the customer if part of the website is running on a different server for the Strict-Transport-Security header. Don't add the preload option until confirmed that all pages can be loaded using HTTPS:
+1. Enable HTTP Strict Transport Security (HSTS).
+    1. In IIS, select the website.
+    1. On the right pane, under Configure, Click HSTS... to open the HSTS configuration dialog.
+        1. Max Age: 31536000
+        1. Include SubDomains: Checked
+        1. Leave Preload: Unchecked (Enable only if all pages on all domains, including on other servers, can be loaded using HTTPS. Check with the customer to confirm.)
+        1. Redirect Http to Https: Checked
+    1. Press OK to Save your changes.
+    1. Test by using HTTP on a page. It should redirect to HTTPS. You can also view the Strict-Transport-Security Response Header value to confirm the settings.
+
+1. <b>Note: Use the HSTS configuration dialog (described above) instead of the following directions.</b> Add the following content security policy response headers for the Live and Review sites. Coordinate with the customer if part of the website is running on a different server for the Strict-Transport-Security header. Don't add the preload option until confirmed that all pages can be loaded using HTTPS:
     1. View the website settings in IIS.
     1. Open the HTTP Response Headers feature under the IIS section
     1. Add the following headers if not already present:<br />
