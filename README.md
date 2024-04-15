@@ -775,6 +775,24 @@ Setup Network Connectivity and update Firewall settings. If the website and serv
 this step won't be needed.<br>
 -->
 
+## Installing and Updating Sql Server Management Studio
+
+[Install Microsoft Sql Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms) on the EC2 instance.
+
+### Grid Results Display
+
+After installing or updating Sql Server Management Studio, you may find that the grid results display is too narrow for each column.
+This has to do with the high resolution display on the computer (your laptop or desktop) being used to run Sql Server Management Studio.
+If this happens, do the following (Windows 11):
+
+1. If you have created a shortcut to Sql Server Management Studio, right click on it and click "Open file location." If there is no shortcut, then find the location in the Apps list and select More -> "Open file location"
+1. Right click on the shortcut or program and select Properties
+1. Click the Compatibility tab and then click on "Change high DPI settings"
+1. Under High DPI scaling override, check the "Override high DPI scaling behavior. Scaling performed by:" checkbox.
+1. Change the value from Application to System(Enhanced).
+1. Press OK to save your settings and close the High DPI settings dialog and then press OK to close the Properties dialog.
+1. Close Sql Server Management Studio if running and then restart it.
+
 ## Moving a Database to RDS
 
 1. Backup the database on the current server, or locate an existing .BAK file.
