@@ -1,10 +1,14 @@
-# Next.js AWS Amplify
+# Next.js
+
+Opportunities for updating and transitioning .NET with REST and Next.js, while pulling new features like project funding from Open Collective's API.
+
+Open Collective's member management system provides a collaborative CRM structure for fundraising and project management. [Clone our Fork](https://github.com/ModelEarth/open)
 
 ## GitHub Copilot
 
-Start by getting the OpenAI driven [GitHub Copilot](https://copilot.github.com/) activated in WebStorm or VS Code.
+Activate the OpenAI-driven [GitHub Copilot](https://copilot.github.com/) in VS Code or WebStorm.
 
-Check that your [copilot access](https://github.com/features/copilot/signup) is enabled. If not, join the waitlist.
+Check that your [copilot access](https://github.com/features/copilot/signup) is enabled.
 
 In Webstorm, click Preferences > Plugins and turn on Github Copilot.  
 
@@ -15,7 +19,7 @@ Paste the following in a .js page to test that Copilot autocompletes the functio
 `function findHighestNumber(array) {`
 
 
-## Setup the AWS Amplify Framework with NextJS
+## Optional: AWS Amplify Framework with NextJS
 
 Select Next.JS (a React framework) when choosing the frontend when [Getting Started with AWS Amplify](https://docs.amplify.aws/start/).  
 
