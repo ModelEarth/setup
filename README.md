@@ -6,6 +6,7 @@ State recycling directories, EPA input-output widgets, zip code industry lists.
 
 #### Deployment Updates
 
+2024 - SessionMessageLabel and ExtrasLabel updated to use Literal controls rather than Label controls so they pass HTML validations. (The Label control span tag was not allowed to wrap div tags.)
 2022 - Update content editing UI. Rotate images based n camera metatag. "Additional Dates" editing remains on event list page.
 2021 - Setup for AWS hosting using EC2 virtual machine and RDS SQL data.  
 2020 - Streamlining server migration.  
