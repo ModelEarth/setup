@@ -4,6 +4,14 @@ Opportunities for updating and transitioning .NET with REST and Next.js, while p
 
 Open Collective's member management system provides a collaborative CRM structure for fundraising and project management. [Clone our Fork](https://github.com/ModelEarth/open)
 
+Just run `nvm use` if you've already installed nvm
+
+	nvm install && nvm use
+	npm install
+	npm run dev
+
+View on: http://localhost:3000
+
 ## GitHub Copilot
 
 Activate the OpenAI-driven [GitHub Copilot](https://copilot.github.com/) in VS Code or WebStorm.
