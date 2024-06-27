@@ -1196,7 +1196,7 @@ Might also need credential and lfs, pasted these from D.A.
 
 [credential]
 
-                helper = manager-core
+                helper = manager
 
 [filter "lfs"]
 
@@ -1213,6 +1213,9 @@ Might also need credential and lfs, pasted these from D.A.
                 directory = *
 
 -->
+
+As of 5/8/2024, under the TortoiseGit settings -> Git -> Credential, make sure that the Helper field for the Global (and System, if present) settings is set to "manager" (without quotes). Otherwise, you may be prompted for the username/password for each repository and it will still fail. The previous release of TortoiseGit (or Git for Windows) used a value of "manager-core" so the following error occurred with the new version:
+git: 'credential-manager-core' is not a git command
 
 You may need to log on as Administor to Pull into folders due to Windows permission restrictions. You'll get the error: Cannot open '.git/FETCH_HEAD': Permission denied. To resolve, add full access permissions for the user on the Review and Live folders ([Stackoverflow](https://stackoverflow.com/questions/251109/tortoisesvn-and-windows-server-2008-user-account-control)). Being a member of the Administrators group is not enough.
 
