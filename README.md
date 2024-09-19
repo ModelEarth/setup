@@ -652,6 +652,36 @@ This allows public access to the web server on the EC2 instance while keeping th
 
 See "Connect to RDS instance" notes in core-admin
 
+## Encrypting connections between the EC2 instance and the RDS instance
+
+Encrypting the connection between the EC2 instance and the RDS instance prevents a man-in-the-middle attack and ensures that the data transported between the two is secure.
+
+1. Download the [US East (N. Virginia) certificate bundle (PEM)](https://truststore.pki.rds.amazonaws.com/us-east-1/us-east-1-bundle.pem) to the EC2 instance. You can see the list of other certificate bundles, including a global bundle at [Using SSL/TLS to encrypt a connection to a DB instance or cluster](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html).
+1. Follow the directions on the [Using SSL with a Microsoft SQL Server DB instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/SQLServer.Concepts.General.SSL.Using.html#SQLServer.Concepts.General.SSL.Client) page to install the certificate. Note that since the certificate bundle does not include the intermediate certificates, the certificates will not be displayed in the Microsoft Management Console (MMC) used to install the certificates.
+1. Setting and/or Viewing the Certificate Authority (CA) for the RDS instance. Follow the directions in the [Using SSL/TLS to encrypt a connection to a DB instance or cluster](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html) page to set or view the CA for the RDS instance. Ensure it is set to rds-ca-rsa2048-g1, which expires in May 25, 2061. The CA may need to be reset if the RDS instance is restored from a backup.
+1. Update the Sql Server Managmentment Studio connection dialog to use encrypted connections. In the connection dialog, select Mandatory for the Encryption dropdown and check the Trust server certificate checkbox. More information: [Connect with SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/quickstarts/ssms-connect?view=sql-server-ver16)
+1. Update the website web.config files connection strings to use encrypted connections. Add "Encrypt=true;TrustServerCertificate=yes" (without quotes) to the connection string settings. Test on the review websites first before update the live sites.
+1. Update the scheduled utilities and Geocode Service configuration files, i.e Static Page Generation, to use encrypted connections. Add "Encrypt=true;TrustServerCertificate=yes" (without quotes) to the connection string settings.
+
+Run the following query to see if any Sql Server sessions are encrypted:
+select SESSION\_ID,
+    ENCRYPT\_OPTION,
+    NET\_TRANSPORT,
+    AUTH\_SCHEME
+    from SYS.DM\_EXEC\_CONNECTIONS
+    WHERE AUTH\_SCHEME = 'SQL'
+	go
+
+This displays sessions that connect via Sql Authentication. Remove the WHERE clause to see all of the sessions and their types.
+
+To see if your connection in SSMS is encrypted, run the following query:
+select ENCRYPT\_OPTION from SYS.DM\_EXEC\_CONNECTIONS where SESSION\_ID = @@SPID
+
+References:
+[Rotate Your SSL/TLS Certificates Now – Amazon RDS and Amazon Aurora Expire in 2024](https://aws.amazon.com/blogs/aws/rotate-your-ssl-tls-certificates-now-amazon-rds-and-amazon-aurora-expire-in-2024/)
+[Updating applications to connect to Microsoft SQL Server DB instances using new SSL/TLS certificates](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/ssl-certificate-rotation-sqlserver.html#ssl-certificate-rotation-sqlserver.updating-trust-store)
+
+
 ## Setup to allow importing/exporting SQL Database backups
 
 Since RDS does not allow access to the underlying operating system that hosts Sql Server, you need to use an S3 bucket to import or export database backups to and from RDS. After setting up components to allow RDS to access the S3 bucket, you will use stored procedures to import or export database backups to and from RDS. Note that importing and exporting is different from the automatic backups that RDS performs.
