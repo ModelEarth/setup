@@ -1,7 +1,8 @@
-# Steps for Configuring and Hosting on AWS
+[Partner Tools](/inspire/)
+# Location Resources and Event Calendars
+<a href="#server">Server Setup</a> | <a href="#database">Database Setup</a> | <a href="#email">Email Setup</a> | <a href="next">NextJS</a> | <a href="#api">Web API</a><br>
 
-Also see: [EE Additions](https://componentcore.com/ee/additions) (developer account required)  
-
+## Steps for Configuring and Hosting on AWS
 
 <a name="server"></a>
 
@@ -1249,4 +1250,4 @@ To validate [accessibility](https://wave.webaim.org/report#/), css, html and lin
 
 ## Web API
 
-Access to the Web API is currently limited to partner site admins.
+Access to our [Component Core EE Additions](https://componentcore.com/ee/additions) is limited to partner site admins.
