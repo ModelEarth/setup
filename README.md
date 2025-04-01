@@ -1,45 +1,7 @@
-## Updates
-
-#### Environmental Tools and Form Components
-
-State recycling directories, EPA input-output widgets, zip code industry lists.  
-
-#### Deployment Updates
-
-2024 - SessionMessageLabel and ExtrasLabel updated to use Literal controls rather than Label controls so they pass HTML validations. (The Label control span tag was not allowed to wrap div tags.) Update QR Code URL.
-2023 - Shorten URLs by avoiding addition of p= when partnerID is not needed.
-2022 - Update content editing UI. Rotate images based on camera metatag. "Additional Dates" editing remains on event list page.
-2021 - Setup for AWS hosting using EC2 virtual machine and RDS SQL data.  
-2020 - Streamlining server migration.  
-2019 - Updates for deployment from Github. 
-
-#### Cloudflare HTTPS Certs
-
-2018 - Switch to free CloudFlare CDN proxies with free LetsEncrypt certs for https security.
-
-#### Email Summary Updates
-
-2017 - Email summaries of exceptions are now sent to admins once every 30 minutes containing the remote IPs and the counts per IP address.  Added to adjust for bursts of emails during high traffic.  
-
-For PageName, we've added the highlighted line. If the script_name ends with a trailing slash, as in “/events/”, we return an empty string rather than “events”.  
-
-For IContains, we now check for an empty string as well as null. If the string had been empty, IContains would have returned 0 as the index, and therefore true, rather than false as would be expected.  
-
-
-#### Custom Page URLs
-
-2016 - Added support for custom page URLs for improved search indexing and short URLs.  
-
-#### Static Page Generation Updates
-
-2015 - Pages generated from multiple queries are now stored in static folders for fast loading.  
+# Steps for Configuring and Hosting on AWS
 
 Also see: [EE Additions](https://componentcore.com/ee/additions) (developer account required)  
 
-<br>
-
-
-# Steps for Configuring and Hosting on AWS
 
 <a name="server"></a>
 
