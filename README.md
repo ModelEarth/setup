@@ -1,4 +1,4 @@
-[Partner Tools](/inspire/)
+[Partner Tools](/inspire/) and [Education Resources](/education)
 # Location Resources and Event Calendars
 <a href="#server">Server Setup</a> | <a href="#database">Database Setup</a> | <a href="#email">Email Setup</a> | <a href="next">NextJS</a> | <a href="#api">Web API</a><br>
 
@@ -1084,6 +1084,13 @@ References:
 1. Click the Outbound Security button and ensure that the TLS encryption checkbox is checked or check it if not checked.
 1. Save the settings.
 
+### ThinkDKIM for IIS SMTP (Standard License) - $199.95 (one time fee) purchased July 13, 2025
+
+[ThinkDKIM](https://www.interactivethoughts.com/products/thinkdkim/) hooks into IIS and signs the messages as they are sent out. DNS records are added on our end, so receiving servers know where to get the public key to validate the message. One time license allows the software to be used on one server with unlimited domains. 
+
+In our code we set the Sender header field. ThinkDKIM gets the domain to look up the key to use from the From email address or the Sender field. Since we set the From address to the current user, which could be on any domain, we have to set the Sender field to provide a consistent domain. The downside is that we may see "Sent by [webside domain] on behalf of blah@domain.com" in the From field when users look at the email, instead of just seeing From "blah@domain.com"
+
+### Helpful Tools for DNS and SMTP
 
 The following tools can be helpful in looking at DNS and Reverse DNS records and testing the SMTP server:
 - [DigWebInterface](https://www.digwebinterface.com/) to view DNS and Reverse DNS records
