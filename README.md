@@ -1243,6 +1243,20 @@ To make a backup, switch from using static IP addresses back to using DHCP, crea
 
 If you don't switch to static IPs, your install from the snapshot will return a 1/2 complete error.  
 
+##
+
+For DMARC Google's recommendation is to set up dedicated email addresses for DMARC reports. The volume of reports depends on the number of emails sent and the domains that emails are sent to.
+
+[Google support article on DMARC](https://support.google.com/a/answer/2466580?sjid=4599257754224993625-NA#zippy=%2Cdmarc-record-tag-definitions-and-values%2Cdmarc-alignment)
+
+[Proofpoint article on DMARC](https://www.proofpoint.com/us/threat-reference/dmarc)
+
+<!--
+This is the DMARC record used by dnr.ga.gov for emails sent by dnr staff members. 
+v=DMARC1;p=none;fo=1;rua=mailto:dmarc_rua@emaildefense.proofpoint.com;ruf=mailto:dmarc_ruf@emaildefense.proofpoint.com
+
+Note the different email addresses for the rua and ruf options. Obtained from mxtoolbox.com supertool. In Google workspace, you might be able to decide which mailbox(i.e. address) you want to view.
+-->
 
 ## To Reboot
 
